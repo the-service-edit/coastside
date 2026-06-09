@@ -32,8 +32,8 @@ body{font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;color:var(--black);
 /* ── NAV ── */
 .nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:28px 48px;transition:all .4s}
 .nav.scrolled{background:rgba(26,26,26,0.95);backdrop-filter:blur(12px);padding:16px 48px}
-.nav-logo{font-size:13px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--white);text-decoration:none}
-.nav-logo span{font-weight:300;letter-spacing:2px;opacity:0.6;margin-left:8px}
+.nav-logo{text-decoration:none}
+.nav-logo-img{height:48px;width:auto;filter:brightness(1.2)}
 .nav-right{display:flex;align-items:center;gap:32px}
 .nav-links{display:flex;gap:28px;list-style:none}
 .nav-links a{color:rgba(255,255,255,0.7);text-decoration:none;font-size:11px;letter-spacing:2px;text-transform:uppercase;transition:color .3s}
@@ -220,7 +220,7 @@ h3{font-size:20px;font-weight:500;letter-spacing:-0.2px;margin-bottom:12px}
 
 <!-- NAV -->
 <nav class="nav" id="nav">
-  <a href="#" class="nav-logo">Coastside<span>Solid Plastering</span></a>
+  <a href="#" class="nav-logo"><img src="img/logo.png" alt="Coastside Solid Plastering" class="nav-logo-img"></a>
   <div class="nav-right">
     <ul class="nav-links">
       <li><a href="#about">About</a></li>
