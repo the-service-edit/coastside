@@ -73,6 +73,11 @@ h3{font-size:20px;font-weight:500;letter-spacing:-0.2px;margin-bottom:12px}
 .lead-body{font-size:18px;line-height:1.8;color:var(--concrete);max-width:560px;font-weight:300}
 .sec-dark .lead-body{color:var(--sand)}
 
+/* ── SERVICE STRIP ── */
+.service-strip{background:var(--charcoal);padding:20px 48px;display:flex;align-items:center;justify-content:center;gap:48px;flex-wrap:wrap}
+.service-strip span{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--sand);white-space:nowrap;position:relative}
+.service-strip span+span::before{content:'';position:absolute;left:-24px;top:50%;transform:translateY(-50%);width:3px;height:3px;background:var(--concrete);border-radius:50%}
+
 /* ── SECTIONS ── */
 .sec{padding:120px 80px}
 .sec-dark{background:var(--charcoal);color:var(--cream)}
@@ -168,8 +173,9 @@ h3{font-size:20px;font-weight:500;letter-spacing:-0.2px;margin-bottom:12px}
 .footer a:hover{color:var(--white)}
 
 /* ── MOBILE CALL BAR ── */
-.mob-bar{display:none;position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bronze);padding:14px 20px;text-align:center}
-.mob-bar a{color:var(--white);text-decoration:none;font-size:12px;letter-spacing:2px;text-transform:uppercase;font-weight:500}
+.mob-bar{display:none;position:fixed;bottom:24px;right:20px;z-index:200}
+.mob-bar a{display:flex;align-items:center;gap:10px;background:rgba(42,42,42,0.9);backdrop-filter:blur(12px);color:var(--white);text-decoration:none;font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:500;padding:14px 28px;border-radius:40px;box-shadow:0 4px 24px rgba(0,0,0,0.2)}
+.mob-bar svg{width:16px;height:16px;fill:none;stroke:var(--bronze);stroke-width:2}
 
 /* ── SCROLL ANIMATIONS ── */
 .fade-up{opacity:0;transform:translateY(32px);transition:opacity .8s ease,transform .8s ease}
@@ -182,6 +188,7 @@ h3{font-size:20px;font-weight:500;letter-spacing:-0.2px;margin-bottom:12px}
   .nav-links,.nav-cta{display:none}
   .hamburger{display:block}
   .sec{padding:80px 24px}
+  .service-strip{padding:16px 24px;gap:16px}
   .about-grid{grid-template-columns:1fr;gap:48px}
   .services-grid{grid-template-columns:1fr}
   .why-grid{grid-template-columns:1fr 1fr;gap:32px}
@@ -245,6 +252,18 @@ h3{font-size:20px;font-weight:500;letter-spacing:-0.2px;margin-bottom:12px}
     </div>
   </div>
 </section>
+
+<!-- SERVICE STRIP -->
+<div class="service-strip">
+  <span>Residential Plastering</span>
+  <span>Commercial Plastering</span>
+  <span>Architectural Coatings</span>
+  <span>Texture Coatings</span>
+  <span>External Rendering</span>
+  <span>Feature Walls</span>
+  <span>Venetian Plaster</span>
+  <span>Repairs & Restoration</span>
+</div>
 
 <!-- ABOUT -->
 <section class="sec sec-warm" id="about">
@@ -549,7 +568,12 @@ h3{font-size:20px;font-weight:500;letter-spacing:-0.2px;margin-bottom:12px}
 </footer>
 
 <!-- MOBILE CALL BAR -->
-<a href="tel:+61400000000" class="mob-bar"><span>Call Now</span></a>
+<div class="mob-bar">
+  <a href="tel:+61400000000">
+    <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.18 2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.362 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+    Call Now
+  </a>
+</div>
 
 <script>
 // Nav scroll effect
