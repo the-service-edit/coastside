@@ -68,10 +68,12 @@ body{font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;color:var(--black);
 /* ── TYPOGRAPHY ── */
 .eyebrow{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--concrete);margin-bottom:20px;font-weight:500}
 .sec-dark .eyebrow{color:var(--sand)}
+.sec-services .eyebrow{color:var(--sand)}
 h2{font-size:clamp(32px,4.5vw,56px);font-weight:700;line-height:1.1;letter-spacing:-1px;margin-bottom:24px}
 h3{font-size:20px;font-weight:500;letter-spacing:-0.2px;margin-bottom:12px}
 .lead-body{font-size:18px;line-height:1.8;color:var(--concrete);max-width:560px;font-weight:300}
 .sec-dark .lead-body{color:var(--sand)}
+.sec-services .lead-body{color:var(--sand)}
 
 /* ── SERVICE STRIP ── */
 .service-strip{background:var(--charcoal);padding:20px 48px;display:flex;align-items:center;justify-content:center;gap:48px;flex-wrap:wrap}
@@ -81,6 +83,9 @@ h3{font-size:20px;font-weight:500;letter-spacing:-0.2px;margin-bottom:12px}
 /* ── SECTIONS ── */
 .sec{padding:120px 80px}
 .sec-dark{background:var(--charcoal);color:var(--cream)}
+.sec-services{background:url('img/services.jpg') center/cover no-repeat;color:var(--cream);position:relative}
+.sec-services::before{content:'';position:absolute;inset:0;background:rgba(26,26,26,0.85)}
+.sec-services>*{position:relative;z-index:1}
 .sec-stone{background:var(--stone)}
 .sec-cream{background:var(--cream)}
 .sec-warm{background:var(--warm)}
@@ -103,7 +108,7 @@ h3{font-size:20px;font-weight:500;letter-spacing:-0.2px;margin-bottom:12px}
 
 /* ── SERVICES ── */
 .services-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;margin-top:64px;background:rgba(255,255,255,0.06)}
-.service-card{padding:56px 48px;background:var(--charcoal);transition:background .3s;cursor:pointer;position:relative;border-left:2px solid transparent;transition:all .3s}
+.service-card{padding:56px 48px;background:rgba(26,26,26,0.7);backdrop-filter:blur(4px);transition:all .3s;cursor:pointer;position:relative;border-left:2px solid transparent}
 .service-card:hover{background:#333;border-left-color:var(--bronze)}
 .service-card h3{font-size:18px;font-weight:500;color:var(--cream);margin-bottom:10px}
 .service-card p{font-size:14px;line-height:1.7;color:var(--concrete);font-weight:300}
@@ -358,7 +363,7 @@ h3{font-size:20px;font-weight:500;letter-spacing:-0.2px;margin-bottom:12px}
 </div>
 
 <!-- SERVICES -->
-<section class="sec sec-dark" id="services">
+<section class="sec sec-services" id="services">
   <div class="fade-up">
     <span class="eyebrow">Services</span>
     <h2>What we deliver</h2>
@@ -399,11 +404,6 @@ h3{font-size:20px;font-weight:500;letter-spacing:-0.2px;margin-bottom:12px}
     </div>
   </div>
 </section>
-
-<!-- SERVICES IMAGE -->
-<div class="img-break">
-  <div class="img-break-bg" style="background:url('img/services.jpg') center/cover no-repeat"></div>
-</div>
 
 <!-- WHY COASTSIDE -->
 <section class="sec sec-stone" id="why">
