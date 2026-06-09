@@ -104,24 +104,20 @@ h3{font-size:20px;font-weight:500;letter-spacing:-0.2px;margin-bottom:12px}
 .service-card p{font-size:14px;line-height:1.7;color:var(--concrete);font-weight:300}
 
 /* ── PROJECTS ── */
-.projects-masonry{display:grid;grid-template-columns:repeat(12,1fr);gap:4px;margin-top:64px}
-.proj{position:relative;overflow:hidden;cursor:pointer}
-.proj:nth-child(1){grid-column:1/8;aspect-ratio:16/10}
-.proj:nth-child(2){grid-column:8/13;aspect-ratio:4/5}
-.proj:nth-child(3){grid-column:1/5;aspect-ratio:4/5}
-.proj:nth-child(4){grid-column:5/9;aspect-ratio:4/5}
-.proj:nth-child(5){grid-column:9/13;aspect-ratio:4/5}
-.proj-img{position:absolute;inset:0;transition:transform .6s ease;background-size:cover;background-position:center}
-.proj:nth-child(1) .proj-img{background:url('img/project-1.jpg') center/cover}
-.proj:nth-child(2) .proj-img{background:url('img/project-2.jpg') center/cover}
-.proj:nth-child(3) .proj-img{background:url('img/project-3.jpg') center/cover}
-.proj:nth-child(4) .proj-img{background:url('img/project-4.jpg') center/cover}
-.proj:nth-child(5) .proj-img{background:url('img/project-5.jpg') center/cover}
-.proj:hover .proj-img{transform:scale(1.04)}
-.proj-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(26,26,26,0.85) 0%,transparent 50%);opacity:0;transition:opacity .4s;display:flex;flex-direction:column;justify-content:flex-end;padding:32px}
-.proj:hover .proj-overlay{opacity:1}
-.proj-overlay h3{color:var(--white);font-size:16px;font-weight:400;margin-bottom:4px}
-.proj-overlay span{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--sand)}
+.slideshow{position:relative;width:100%;aspect-ratio:16/9;margin-top:64px;overflow:hidden;background:var(--charcoal)}
+.slide{position:absolute;inset:0;opacity:0;transition:opacity .8s ease}
+.slide.active{opacity:1}
+.slide-img{position:absolute;inset:0;background-size:cover;background-position:center}
+.slide-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(26,26,26,0.8) 0%,transparent 40%)}
+.slide-info{position:absolute;bottom:48px;left:48px;color:var(--white)}
+.slide-info h3{font-size:24px;font-weight:500;margin-bottom:6px}
+.slide-info span{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--sand)}
+.slide-arrows{position:absolute;bottom:48px;right:48px;display:flex;gap:8px}
+.slide-arrow{width:48px;height:48px;border:1px solid rgba(255,255,255,0.3);background:transparent;color:var(--white);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .3s}
+.slide-arrow:hover{background:var(--bronze);border-color:var(--bronze)}
+.slide-dots{position:absolute;bottom:56px;left:50%;transform:translateX(-50%);display:flex;gap:8px}
+.slide-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.3);border:none;cursor:pointer;transition:background .3s}
+.slide-dot.active{background:var(--bronze)}
 
 /* ── WHY ── */
 .why-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:48px;margin-top:64px}
@@ -188,10 +184,6 @@ h3{font-size:20px;font-weight:500;letter-spacing:-0.2px;margin-bottom:12px}
   .sec{padding:80px 24px}
   .about-grid{grid-template-columns:1fr;gap:48px}
   .services-grid{grid-template-columns:1fr}
-  .projects-masonry{grid-template-columns:1fr 1fr}
-  .proj{aspect-ratio:1!important}
-  .proj:nth-child(1),.proj:nth-child(2),.proj:nth-child(3),.proj:nth-child(4),.proj:nth-child(5){grid-column:auto}
-  .proj:nth-child(1){grid-column:1/3;aspect-ratio:16/9!important}
   .why-grid{grid-template-columns:1fr 1fr;gap:32px}
   .testimonial-strip{grid-template-columns:1fr}
   .contact-split{grid-template-columns:1fr}
@@ -199,13 +191,15 @@ h3{font-size:20px;font-weight:500;letter-spacing:-0.2px;margin-bottom:12px}
   .form-row{grid-template-columns:1fr}
   .footer{padding:32px 24px;flex-direction:column;gap:12px;text-align:center}
   .mob-bar{display:block}
+  .slide-info{bottom:24px;left:24px}
+  .slide-info h3{font-size:18px}
+  .slide-arrows{bottom:24px;right:24px}
+  .slide-arrow{width:40px;height:40px}
   .brands-row{gap:32px}
 }
 @media(max-width:600px){
   .why-grid{grid-template-columns:1fr}
   .stat-row{flex-direction:column;gap:24px}
-  .projects-masonry{grid-template-columns:1fr}
-  .proj:nth-child(1){grid-column:auto}
 }
 </style>
 </head>
@@ -217,8 +211,8 @@ h3{font-size:20px;font-weight:500;letter-spacing:-0.2px;margin-bottom:12px}
   <div class="nav-right">
     <ul class="nav-links">
       <li><a href="#about">About</a></li>
-      <li><a href="#services">Services</a></li>
       <li><a href="#projects">Projects</a></li>
+      <li><a href="#services">Services</a></li>
       <li><a href="#testimonials">Testimonials</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
@@ -233,8 +227,8 @@ h3{font-size:20px;font-weight:500;letter-spacing:-0.2px;margin-bottom:12px}
 <div class="mob-menu" id="mobMenu">
   <button class="mob-close" onclick="this.parentElement.classList.remove('open')" aria-label="Close menu">&times;</button>
   <a href="#about" onclick="this.parentElement.classList.remove('open')">About</a>
-  <a href="#services" onclick="this.parentElement.classList.remove('open')">Services</a>
   <a href="#projects" onclick="this.parentElement.classList.remove('open')">Projects</a>
+  <a href="#services" onclick="this.parentElement.classList.remove('open')">Services</a>
   <a href="#testimonials" onclick="this.parentElement.classList.remove('open')">Testimonials</a>
   <a href="#contact" onclick="this.parentElement.classList.remove('open')">Contact</a>
 </div>
@@ -292,6 +286,50 @@ h3{font-size:20px;font-weight:500;letter-spacing:-0.2px;margin-bottom:12px}
   </div>
 </section>
 
+<!-- PROJECTS -->
+<section class="sec sec-warm" id="projects">
+  <div class="fade-up">
+    <span class="eyebrow">Featured Projects</span>
+    <h2>Selected work</h2>
+    <p class="lead-body">A curated selection of residential, commercial and architectural projects.</p>
+  </div>
+  <div class="slideshow fade-up" id="slideshow">
+    <!-- TODO: Replace with real project images -->
+    <div class="slide active">
+      <div class="slide-img" style="background-image:url('img/project-1.jpg')"></div>
+      <div class="slide-overlay"></div>
+      <div class="slide-info"><h3>Luxury Residence</h3><span>Gold Coast Hinterland</span></div>
+    </div>
+    <div class="slide">
+      <div class="slide-img" style="background-image:url('img/project-2.jpg')"></div>
+      <div class="slide-overlay"></div>
+      <div class="slide-info"><h3>Commercial Tower</h3><span>Surfers Paradise</span></div>
+    </div>
+    <div class="slide">
+      <div class="slide-img" style="background-image:url('img/project-3.jpg')"></div>
+      <div class="slide-overlay"></div>
+      <div class="slide-info"><h3>Boutique Hotel</h3><span>Burleigh Heads</span></div>
+    </div>
+    <div class="slide">
+      <div class="slide-img" style="background-image:url('img/project-4.jpg')"></div>
+      <div class="slide-overlay"></div>
+      <div class="slide-info"><h3>Apartment Complex</h3><span>Broadbeach</span></div>
+    </div>
+    <div class="slide">
+      <div class="slide-img" style="background-image:url('img/project-5.jpg')"></div>
+      <div class="slide-overlay"></div>
+      <div class="slide-info"><h3>Heritage Restoration</h3><span>Main Beach</span></div>
+    </div>
+    <div class="slide-arrows">
+      <button class="slide-arrow" onclick="changeSlide(-1)" aria-label="Previous">&larr;</button>
+      <button class="slide-arrow" onclick="changeSlide(1)" aria-label="Next">&rarr;</button>
+    </div>
+  </div>
+  <div style="margin-top:48px;text-align:center">
+    <a href="#" class="btn btn-dark">View All Projects</a>
+  </div>
+</section>
+
 <!-- IMAGE BREAK -->
 <div class="img-break">
   <!-- TODO: Replace with real wide architectural image -->
@@ -338,56 +376,6 @@ h3{font-size:20px;font-weight:500;letter-spacing:-0.2px;margin-bottom:12px}
       <h3>Repairs & Restoration</h3>
       <p>Expert plaster repair and heritage restoration for damaged or ageing surfaces.</p>
     </div>
-  </div>
-</section>
-
-<!-- PROJECTS -->
-<section class="sec sec-warm" id="projects">
-  <div class="fade-up">
-    <span class="eyebrow">Featured Projects</span>
-    <h2>Selected work</h2>
-    <p class="lead-body">A curated selection of residential, commercial and architectural projects.</p>
-  </div>
-  <div class="projects-masonry fade-up">
-    <!-- TODO: Replace placeholders with real project images -->
-    <div class="proj">
-      <div class="proj-img"></div>
-      <div class="proj-overlay">
-        <h3>Luxury Residence</h3>
-        <span>Gold Coast Hinterland</span>
-      </div>
-    </div>
-    <div class="proj">
-      <div class="proj-img"></div>
-      <div class="proj-overlay">
-        <h3>Commercial Tower</h3>
-        <span>Surfers Paradise</span>
-      </div>
-    </div>
-    <div class="proj">
-      <div class="proj-img"></div>
-      <div class="proj-overlay">
-        <h3>Boutique Hotel</h3>
-        <span>Burleigh Heads</span>
-      </div>
-    </div>
-    <div class="proj">
-      <div class="proj-img"></div>
-      <div class="proj-overlay">
-        <h3>Apartment Complex</h3>
-        <span>Broadbeach</span>
-      </div>
-    </div>
-    <div class="proj">
-      <div class="proj-img"></div>
-      <div class="proj-overlay">
-        <h3>Heritage Restoration</h3>
-        <span>Main Beach</span>
-      </div>
-    </div>
-  </div>
-  <div style="margin-top:48px;text-align:center">
-    <a href="#" class="btn btn-dark">View All Projects</a>
   </div>
 </section>
 
@@ -573,6 +561,16 @@ window.addEventListener('scroll',()=>{
 // Scroll fade-up
 const obs=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');obs.unobserve(e.target)}});},{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
 document.querySelectorAll('.fade-up').forEach(el=>obs.observe(el));
+
+// Slideshow
+let current=0;
+const slides=document.querySelectorAll('.slide');
+function changeSlide(dir){
+  slides[current].classList.remove('active');
+  current=(current+dir+slides.length)%slides.length;
+  slides[current].classList.add('active');
+}
+setInterval(()=>changeSlide(1),5000);
 
 // Smooth scroll
 document.querySelectorAll('a[href^="#"]').forEach(a=>{
