@@ -218,6 +218,22 @@ h3{font-size:20px;font-weight:500;letter-spacing:-0.2px;margin-bottom:12px}
   .why-grid{grid-template-columns:1fr}
   .stat-row{flex-direction:column;gap:24px}
 }
+
+/* ── INSTAGRAM ── */
+.ig-head{display:flex;justify-content:space-between;align-items:flex-end;gap:32px;flex-wrap:wrap;margin-bottom:48px}
+.ig-head h2{margin-bottom:12px}
+.ig-handle{font-size:13px;letter-spacing:1px;color:var(--bronze);text-decoration:none}
+.ig-handle:hover{color:var(--charcoal)}
+.ig-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.ig-grid:empty{display:none}
+.ig-tile{position:relative;display:block;aspect-ratio:1/1;overflow:hidden;background:var(--sand)}
+.ig-tile img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s ease}
+.ig-tile::after{content:attr(data-cap);position:absolute;inset:0;padding:24px;display:flex;align-items:flex-end;background:linear-gradient(to top,rgba(26,26,26,.85),rgba(26,26,26,0) 60%);color:var(--cream);font-size:13px;line-height:1.5;opacity:0;transition:opacity .4s}
+.ig-tile:hover img{transform:scale(1.04)}
+.ig-tile:hover::after{opacity:1}
+.ig-tile .ig-vid{position:absolute;top:14px;right:14px;width:0;height:0;border-left:12px solid var(--white);border-top:7px solid transparent;border-bottom:7px solid transparent;filter:drop-shadow(0 1px 2px rgba(0,0,0,.5))}
+.ig-cta{margin-top:48px;text-align:center}
+@media(max-width:1024px){.ig-grid{grid-template-columns:repeat(2,1fr);gap:4px}.ig-tile::after{display:none}}
 </style>
 </head>
 <body>
@@ -352,8 +368,20 @@ h3{font-size:20px;font-weight:500;letter-spacing:-0.2px;margin-bottom:12px}
       <button class="slide-arrow" onclick="changeSlide(1)" aria-label="Next">&rarr;</button>
     </div>
   </div>
-  <div style="margin-top:48px;text-align:center">
-    <a href="#" class="btn btn-dark">View All Projects</a>
+</section>
+
+<!-- INSTAGRAM -->
+<section class="sec sec-stone" id="instagram">
+  <div class="ig-head fade-up">
+    <div>
+      <span class="eyebrow">Straight off the tools</span>
+      <h2>Latest work</h2>
+      <a class="ig-handle" href="https://www.instagram.com/coast_side_plastering/" target="_blank" rel="noopener">@coast_side_plastering</a>
+    </div>
+  </div>
+  <div class="ig-grid fade-up" id="igGrid"></div>
+  <div class="ig-cta fade-up">
+    <a href="https://www.instagram.com/coast_side_plastering/" target="_blank" rel="noopener" class="btn btn-dark">See More on Instagram</a>
   </div>
 </section>
 
@@ -563,6 +591,29 @@ function changeSlide(dir){
   slides[current].classList.add('active');
 }
 setInterval(()=>changeSlide(1),5000);
+
+// Instagram feed (Behold JSON). Paste the feed URL from behold.so below.
+// Left empty or if the feed fails, the grid stays hidden and the Instagram button remains.
+const IG_FEED_URL='';
+(function(){
+  const grid=document.getElementById('igGrid');
+  if(!grid||!IG_FEED_URL)return;
+  fetch(IG_FEED_URL).then(r=>r.ok?r.json():Promise.reject()).then(d=>{
+    (d.posts||[]).slice(0,6).forEach(p=>{
+      const src=(p.sizes&&p.sizes.medium&&p.sizes.medium.mediaUrl)||p.thumbnailUrl||p.mediaUrl;
+      if(!src)return;
+      const cap=(p.prunedCaption||'').trim();
+      const a=document.createElement('a');
+      a.className='ig-tile';a.href=p.permalink;a.target='_blank';a.rel='noopener';
+      a.dataset.cap=cap.length>120?cap.slice(0,117)+'...':cap;
+      const img=document.createElement('img');
+      img.src=src;img.loading='lazy';img.alt=p.altText||cap.slice(0,100)||'Coastside Solid Plastering project';
+      a.appendChild(img);
+      if(p.mediaType==='VIDEO'){const v=document.createElement('span');v.className='ig-vid';a.appendChild(v);}
+      grid.appendChild(a);
+    });
+  }).catch(()=>{});
+})();
 
 // Smooth scroll
 document.querySelectorAll('a[href^="#"]').forEach(a=>{
