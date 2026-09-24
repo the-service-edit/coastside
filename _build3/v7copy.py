@@ -268,8 +268,8 @@ def home():
     L = c.L
     featured = [p for p in PROJECTS if p['featured']][:3]
     hero = f'''<section class="v7h" aria-labelledby="h1">
-  <div class="v7h-bg"><video class="v7h-video" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover" autoplay muted loop playsinline preload="metadata" poster="{L('img/v7-hero-poster.jpg')}" aria-hidden="true"><source src="{L('img/v7-hero.mp4')}" type="video/mp4"></video></div>
-  <script>(function(){{var v=document.querySelector('.v7h-video');if(v&&window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches){{v.removeAttribute('autoplay');v.pause();}}}})();</script>
+  <div class="v7h-bg"><video class="v7h-video" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover" autoplay muted loop playsinline preload="metadata" poster="{L('img/v7-hero-poster.jpg')}" data-desktop="{L('img/v7-hero-desktop.mp4')}" data-desktop-poster="{L('img/v7-hero-desktop-poster.jpg')}" aria-hidden="true"><source src="{L('img/v7-hero.mp4')}" type="video/mp4"></video></div>
+  <script>(function(){{var v=document.querySelector('.v7h-video');if(!v)return;var mm=window.matchMedia||function(){{return{{matches:false}}}};if(mm('(min-width: 900px)').matches){{v.poster=v.dataset.desktopPoster;v.querySelector('source').src=v.dataset.desktop;v.load();}}if(mm('(prefers-reduced-motion: reduce)').matches){{v.removeAttribute('autoplay');v.pause();}}else{{var p=v.play();if(p&&p.catch)p.catch(function(){{}});}}}})();</script>
   <div class="v7h-shade" aria-hidden="true"></div>
   <div class="v7h-stack">
     <p class="v7h-kicker">Commercial rendering &middot; Solid plastering &middot; Architectural finishes</p>

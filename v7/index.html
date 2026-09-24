@@ -14,7 +14,7 @@
 <meta name="theme-color" content="#2A2A2A">
 <link rel="icon" href="img/logo.png">
 
-<link rel="stylesheet" href="assets/site.css"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"><link rel="stylesheet" href="assets/theme-v7.css?v=20260924-2">
+<link rel="stylesheet" href="assets/site.css"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"><link rel="stylesheet" href="assets/theme-v7.css?v=20260924-3">
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "HomeAndConstructionBusiness", "@id": "https://coastside.theserviceedit.com/v7/#business", "name": "Coastside Solid Plastering", "legalName": "Coastside Solid Plastering Pty Ltd", "taxID": "75 660 293 041", "telephone": "+61438045585", "email": "steven@coastsidesp.com.au", "url": "https://coastside.theserviceedit.com/v7/", "logo": "https://coastside.theserviceedit.com/v7/img/logo.png", "image": "https://coastside.theserviceedit.com/v7/img/street-front.jpg", "address": {"@type": "PostalAddress", "addressLocality": "Gold Coast", "addressRegion": "QLD", "addressCountry": "AU"}, "areaServed": ["Gold Coast", "Byron Bay", "Tweed Heads", "Brisbane"], "sameAs": ["https://www.instagram.com/coast_side_plastering/"]}</script>
 </head>
 <body data-type="home" data-slug="">
@@ -27,8 +27,8 @@
 <div class="mnav" id="mnav" role="dialog" aria-label="Menu"><button class="close" aria-label="Close menu">&times;</button><a href="index.html">Home</a><a href="services/index.html">Services</a><a href="projects/index.html">Projects</a><a href="service-areas/index.html">Service areas</a><a href="builder-pack/index.html">Builder pack</a><a href="resources/index.html">Resources</a><a href="about/index.html">About</a><a href="contact/index.html">Contact</a><a class="btn btn-primary" href="quote/index.html">Send plans</a></div>
 <main id="main">
 <section class="v7h" aria-labelledby="h1">
-  <div class="v7h-bg"><video class="v7h-video" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover" autoplay muted loop playsinline preload="metadata" poster="img/v7-hero-poster.jpg" aria-hidden="true"><source src="img/v7-hero.mp4" type="video/mp4"></video></div>
-  <script>(function(){var v=document.querySelector('.v7h-video');if(v&&window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches){v.removeAttribute('autoplay');v.pause();}})();</script>
+  <div class="v7h-bg"><video class="v7h-video" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover" autoplay muted loop playsinline preload="metadata" poster="img/v7-hero-poster.jpg" data-desktop="img/v7-hero-desktop.mp4" data-desktop-poster="img/v7-hero-desktop-poster.jpg" aria-hidden="true"><source src="img/v7-hero.mp4" type="video/mp4"></video></div>
+  <script>(function(){var v=document.querySelector('.v7h-video');if(!v)return;var mm=window.matchMedia||function(){return{matches:false}};if(mm('(min-width: 900px)').matches){v.poster=v.dataset.desktopPoster;v.querySelector('source').src=v.dataset.desktop;v.load();}if(mm('(prefers-reduced-motion: reduce)').matches){v.removeAttribute('autoplay');v.pause();}else{var p=v.play();if(p&&p.catch)p.catch(function(){});}})();</script>
   <div class="v7h-shade" aria-hidden="true"></div>
   <div class="v7h-stack">
     <p class="v7h-kicker">Commercial rendering &middot; Solid plastering &middot; Architectural finishes</p>

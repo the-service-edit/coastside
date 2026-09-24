@@ -310,3 +310,4 @@ body[data-type=home] .nav.compact .nav-links .nav-cta{background:#7D6749!importa
 @media (max-width:700px){.v7h-bg video{object-position:55% 60%}}
 /* Stronger centre shade: the hero video is a white house, the type needs the contrast */
 .v7h-shade{background:radial-gradient(ellipse 58% 44% at 50% 52%,rgba(22,21,19,.6) 0%,rgba(22,21,19,.34) 55%,rgba(22,21,19,0) 85%),linear-gradient(180deg,rgba(22,21,19,.38) 0%,rgba(22,21,19,.12) 28%,rgba(22,21,19,.16) 62%,rgba(22,21,19,.6) 100%)}
+@media (min-width:900px){.v7h-bg video{object-position:50% 45%}}
