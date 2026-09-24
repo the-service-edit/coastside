@@ -217,7 +217,7 @@ def home():
     L = c.L
     featured = [p for p in PROJECTS if p['featured']][:3]
     hero = f'''<section class="v7h" aria-labelledby="h1">
-  <div class="v7h-bg"><video class="v7h-video" autoplay muted loop playsinline preload="metadata" poster="{L('img/v7-hero-poster.jpg')}" aria-hidden="true"><source src="{L('img/v7-hero.mp4')}" type="video/mp4"></video></div>
+  <div class="v7h-bg"><video class="v7h-video" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover" autoplay muted loop playsinline preload="metadata" poster="{L('img/v7-hero-poster.jpg')}" aria-hidden="true"><source src="{L('img/v7-hero.mp4')}" type="video/mp4"></video></div>
   <script>(function(){{var v=document.querySelector('.v7h-video');if(v&&window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches){{v.removeAttribute('autoplay');v.pause();}}}})();</script>
   <div class="v7h-shade" aria-hidden="true"></div>
   <div class="v7h-stack">
