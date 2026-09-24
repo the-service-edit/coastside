@@ -56,6 +56,21 @@
   var hv=d.querySelector('.vhero-video');
   if(hv&&w.matchMedia&&w.matchMedia('(prefers-reduced-motion: reduce)').matches){hv.removeAttribute('autoplay');hv.pause()}
 
+  /* ---------- hero gallery drift: slides across and back, 30s+ each way ---------- */
+  var track=d.querySelector('.shero-track');
+  if(track){
+    var strip=track.parentNode;
+    var setDrift=function(){
+      var dist=Math.max(0,track.scrollWidth-strip.clientWidth);
+      track.style.setProperty('--dist',dist+'px');
+      track.style.setProperty('--dur',Math.max(30,Math.round(dist/110))+'s');
+      track.classList.toggle('drift',dist>0);
+    };
+    setDrift();w.addEventListener('load',setDrift);
+    var rt;w.addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(setDrift,150)});
+    if('IntersectionObserver' in w){new IntersectionObserver(function(es){track.style.animationPlayState=es[0].isIntersecting?'':'paused'}).observe(strip)}
+  }
+
   /* ---------- nav ---------- */
   var nav=d.querySelector('.nav');
   if(nav){var onS=function(){nav.classList.toggle('compact',w.scrollY>40)};w.addEventListener('scroll',onS,{passive:true});onS()}

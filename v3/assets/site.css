@@ -409,9 +409,13 @@ h3{font-size:19px;font-weight:600;line-height:1.3;letter-spacing:-.15px;margin-b
 .shero-head{text-align:center;max-width:1440px;margin:0 auto;padding:0 var(--gut)}
 .shero-head h1{font-family:Anton,'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:clamp(56px,10.5vw,156px);font-weight:400;line-height:.95;letter-spacing:.005em;text-transform:uppercase;color:var(--cream)}
 .shero-strip{position:relative;margin:64px 0 80px;overflow:hidden}
-.shero-row{display:flex;justify-content:space-between;align-items:center;width:160vw;margin-left:-30vw}
-.shero-row picture{width:32.4%}
-.shero-row img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:12px}
+.shero-track{display:flex;align-items:center;gap:36px;width:max-content;padding:0 18px;will-change:transform}
+.shero-track picture{flex:none}
+.shero-track img{height:550px;width:auto;max-width:none;object-fit:cover}
+.js .shero-track.drift{animation:shero-drift var(--dur,60s) linear infinite alternate}
+.shero-strip:hover .shero-track.drift{animation-play-state:paused}
+@keyframes shero-drift{from{transform:translateX(0)}to{transform:translateX(calc(var(--dist,0px) * -1))}}
+@media (prefers-reduced-motion:reduce){.js .shero-track.drift{animation:none}}
 .shero-mask{position:absolute;left:-1vw;width:102vw;height:clamp(28px,5vw,72px);fill:var(--charcoal);pointer-events:none}
 .shero-mask.top{top:-1px}
 .shero-mask.bottom{bottom:-1px}
@@ -424,13 +428,12 @@ h3{font-size:19px;font-weight:600;line-height:1.3;letter-spacing:-.15px;margin-b
 .shero-text{max-width:660px;margin:112px auto 0;text-align:center}
 .shero-text p{font-size:clamp(20px,2vw,27px);line-height:1.5;color:var(--cream);margin-bottom:36px}
 .shero-text .btns{justify-content:center}
-@media (max-width:991px){.shero-row{width:180vw;margin-left:-40vw}}
+@media (max-width:991px){.shero-track img{height:400px}}
 @media (max-width:767px){
   .shero{padding:72px 0 88px}
   .shero-strip{margin:44px 0 56px}
-  .shero-row{width:1280px;margin-left:calc(50vw - 640px)}
-  .shero-stats{grid-template-columns:1fr 1fr;row-gap:36px}
+    .shero-stats{grid-template-columns:1fr 1fr;row-gap:36px}
   .shero-stats i{display:none}
   .shero-text{margin-top:72px}
 }
-@media (max-width:479px){.shero-row{width:1070px;margin-left:calc(50vw - 535px)}.shero-head h1{font-size:15vw}}
+@media (max-width:479px){.shero-track{gap:24px;padding:0 12px}.shero-track img{height:250px}.shero-head h1{font-size:15vw}}

@@ -22,6 +22,13 @@ IMG_DIR = os.path.join(OUT, 'img')
 E = html.escape
 
 PUB_SERVICES = [s for s in SERVICES if not s.get('conditional')]
+MARQUEE = [('contact', 'Coastside crew rendering a canal-front home from scaffolding'),
+           ('hero', 'White rendered coastal home with timber battens, Gold Coast'),
+           ('project-4', 'Multi-storey residential building with curved rendered balconies'),
+           ('ig-5', 'Coastside plasterer rendering from scaffolding'),
+           ('project-5', 'Rendered curved entry wall and bench at a commercial building'),
+           ('services', 'Coastside crew pumping and finishing render'),
+           ('ig-3', 'Rendered two-storey coastal home at Brakes Crescent, Miami')]
 PUB_LOCATIONS = [l for l in LOCATIONS if l['published']]
 NAV = [('services/', 'Services'), ('projects/', 'Projects'), ('service-areas/', 'Service areas'),
        ('builder-pack/', 'Builder pack'), ('resources/', 'Resources')]
@@ -215,10 +222,8 @@ def home():
         hero_html = f'''<section class="shero dark" aria-labelledby="h1">
   <div class="shero-head rise"><span class="eyebrow">Solid plastering, render and architectural coatings</span><h1 id="h1">Finish matters.<br>So does turning up.</h1></div>
   <div class="shero-strip rise" style="--d:120ms">
-    <div class="shero-row">
-      {pic(c, 'contact', 'Coastside crew rendering a canal-front home from scaffolding', '(max-width:767px) 420px, 52vw', eager=True)}
-      {pic(c, 'hero', 'White rendered coastal home with timber battens, Gold Coast', '(max-width:767px) 420px, 52vw', eager=True)}
-      {pic(c, 'project-4', 'Multi-storey residential building with curved rendered balconies', '(max-width:767px) 420px, 52vw', eager=True)}
+    <div class="shero-track">
+      {''.join(pic(c, n, a_, '(max-width:479px) 450px, (max-width:991px) 720px, 980px', eager=(i < 3)) for i, (n, a_) in enumerate(MARQUEE))}
     </div>
     <svg class="shero-mask top" viewBox="0 0 1000 60" preserveAspectRatio="none" aria-hidden="true"><path d="M0 0H1000V8Q500 70 0 8Z"/></svg>
     <svg class="shero-mask bottom" viewBox="0 0 1000 60" preserveAspectRatio="none" aria-hidden="true"><path d="M0 60H1000V52Q500 -10 0 52Z"/></svg>
