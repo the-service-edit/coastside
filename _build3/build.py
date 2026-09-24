@@ -221,7 +221,8 @@ def home():
     featured = [p for p in PROJECTS if p['featured']][:3]
     if HERO == 'strip':
         hero_html = f'''<section class="shero dark" aria-labelledby="h1">
-  <div class="shero-head rise"><span class="eyebrow">Solid plastering, render and architectural coatings</span><h1 id="h1">Finish matters.<br>So does turning up.</h1></div>
+  <div class="shero-head rise"><span class="eyebrow">Solid plastering, render and architectural coatings</span><h1 id="h1">Finish matters.<br>So does turning up.</h1>
+    <div class="btns shero-cta"><a class="btn btn-primary" href="{L('quote/')}" data-track="hero_send_plans">Send plans <span aria-hidden="true">&rarr;</span></a><a class="btn btn-ghost" href="{L('builder-pack/')}">Builder pack</a></div></div>
   <div class="shero-strip rise" style="--d:120ms">
     <div class="shero-scroll" tabindex="0" aria-label="Project photos. Swipe to see more."><div class="shero-track">
       {''.join(pic(c, n, a_, '(max-width:479px) 450px, (max-width:991px) 720px, 980px', eager=(i < 3)) for i, (n, a_) in enumerate(MARQUEE))}
@@ -237,7 +238,7 @@ def home():
       <div class="rise" style="--d:300ms"><strong>QBCC</strong><span>Licensed {tbc('no.')}</span></div>
     </div>
     <div class="shero-text rise"><p>A second-generation plasterer's crew, rendering and plastering for builders, architects and developers from {SITE['area']}. Finished to the specification and on your program.</p>
-      <div class="btns"><a class="btn btn-primary" href="{L('quote/')}" data-track="hero_send_plans">Send plans</a><a class="btn btn-ghost" href="{L('builder-pack/')}">Builder pack</a></div></div>
+</div>
   </div>
 </section>
 '''

@@ -50,3 +50,4 @@ body{background:var(--warm)}
 .shero-stats i{background:var(--lime);opacity:.6}
 .vbadge-l{background:var(--ink);color:var(--lime)}
 .vcard-main h1 span{color:var(--concrete-dk)}
+.nav-links .nav-cta{color:var(--ink)!important}
