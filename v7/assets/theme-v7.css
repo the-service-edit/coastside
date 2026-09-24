@@ -133,3 +133,54 @@ h3{font-family:var(--sans);font-weight:500;letter-spacing:-.01em}
   .oh-chapter h2{font-size:44px}
 }
 .card img,.ph img,.proj img,.gallery img{filter:saturate(.86) sepia(.07)}
+
+/* ---------- V7 on the V5 structure ---------- */
+/* Home: global nav floats over the hero, fills in once you scroll */
+body[data-type=home] .nav{position:fixed;left:0;right:0;top:0;background:transparent!important;border-bottom:1px solid rgba(255,255,255,.14);transition:background .35s ease,height .25s ease,border-color .35s}
+body[data-type=home] .nav.compact{background:var(--charcoal)!important;border-bottom-color:transparent}
+body[data-type=home] .nav-links .nav-cta{background:transparent!important;color:#fff!important;border:1px solid rgba(255,255,255,.55)}
+body[data-type=home] .nav.compact .nav-links .nav-cta{background:var(--lime)!important;color:var(--ink)!important;border-color:var(--lime)}
+.nav-links a{font-size:11px}
+.nav-logo span{letter-spacing:.24em}
+.v7h{grid-template-rows:1fr auto}
+.v7h-stack{padding-top:var(--nav-h)}
+
+/* Intro band under the hero */
+.v7-intro{background:var(--paper);padding:120px var(--gut) 112px;text-align:center}
+.v7-intro-text{font:400 clamp(26px,2.6vw,38px)/1.3 var(--serif);color:var(--ink);max-width:880px;margin:0 auto 88px}
+.v7-intro .shero-stats strong{font:400 clamp(44px,4.4vw,62px)/1 var(--serif);color:var(--ink);letter-spacing:0}
+.v7-intro .shero-stats span{color:var(--concrete-dk);font-size:11px;letter-spacing:.2em}
+.v7-intro .shero-stats i{background:var(--honey);opacity:.5}
+
+/* V5 sections in the V7 palette */
+.sec{background:var(--paper)}
+.sec.cream{background:var(--cream)}
+.sec.stone,.stone{background:var(--paper-2)}
+.sec.dark,.dark{background:var(--charcoal);color:var(--cream)}
+.sec h2,.sec-tight h2{font-family:var(--serif);font-weight:400}
+.check .q{font-family:var(--sans);letter-spacing:.18em;text-transform:uppercase;font-size:10.5px}
+.cta{background:var(--charcoal)}
+.cta h2{font-family:var(--serif);font-weight:400;font-size:clamp(40px,4.4vw,64px)}
+.btn{border-radius:0!important;font:500 11.5px var(--sans);letter-spacing:.2em;text-transform:uppercase}
+.card{background:transparent}
+.card h3{font-family:var(--serif);font-weight:500;font-size:26px;letter-spacing:0}
+.svc-row h3{font-family:var(--serif);font-weight:500;font-size:28px;letter-spacing:0}
+.steps strong,.steps h3{font-family:var(--serif);font-weight:500;font-size:24px}
+.footer{background:var(--charcoal)}
+@media (max-width:700px){
+  .v7-intro{padding:80px 22px}
+  .v7-intro-text{margin-bottom:56px}
+}
+
+/* ---------- One typeface across the site: Inter, a neo-grotesk close to the Artedomus wordmark ---------- */
+:root{--sans:'Inter','Helvetica Neue',Helvetica,Arial,sans-serif;--serif:var(--sans);--f:var(--sans)}
+body,button,input,select,textarea{font-family:var(--sans)}
+h1,.h1,h2,.h2,.sec h2,.cta h2,.card h3,.svc-row h3,.steps strong,.steps h3,.oh-proj strong{font-family:var(--sans)!important;font-weight:400;letter-spacing:-.035em}
+h1,.h1{font-weight:300;letter-spacing:-.045em}
+.card h3,.svc-row h3,.steps strong,.steps h3{font-weight:500;font-size:22px;letter-spacing:-.02em}
+.v7h-wm{font-weight:300;letter-spacing:-.055em}
+.v7h-serif{font:300 clamp(22px,2.4vw,34px)/1.1 var(--sans);letter-spacing:.2em}
+.v7-intro-text{font:300 clamp(24px,2.3vw,34px)/1.35 var(--sans);letter-spacing:-.02em}
+.v7-intro .shero-stats strong{font:300 clamp(44px,4.4vw,62px)/1 var(--sans);letter-spacing:-.04em}
+.shero-head h1{font-family:var(--sans)!important}
+@media (max-width:700px){.v7h-foot{grid-template-columns:1fr;padding-bottom:96px}.v7h-foot a{display:none}}
