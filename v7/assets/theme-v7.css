@@ -198,3 +198,27 @@ h2,.h2{font-size:clamp(28px,3vw,44px)}
 /* No decorative line before eyebrows/labels */
 .eyebrow::before{content:none!important;display:none!important}
 .eyebrow{gap:0}
+
+/* ---------- Version 1 colour scheme (live one-page site): charcoal, black, bronze, stone, cream ---------- */
+:root{
+  --ink:#1A1A1A;--charcoal:#2A2A2A;--graphite:#3a3936;
+  --honey:#8B7355;--honey-lt:#C7AB86;--walnut:#6F5B43;
+  --lime:#F5F2ED;--lime-dk:#E8E4DF;
+  --bronze:#8B7355;--bronze-dk:#6F5B43;--bronze-lt:#C7AB86;
+  --stone:#E8E4DF;--sand:#D4CFC7;--concrete:#8A8680;--concrete-dk:#625E58;
+  --cream:#F5F2ED;--warm:#FAF8F5;--white:#fff;--body:#45433F;
+  --paper:#FAF8F5;--paper-2:#E8E4DF;--rule:#D4CFC7;
+}
+::selection{background:var(--bronze);color:#fff}
+/* Buttons as V1: bronze fill, white text; outline on dark */
+.oh-pill,.btn-primary,.nav-cta,.mbar a,.vbtn,.skip,
+.dark .btn-primary,.cta .btn-primary,.nav .nav-cta,.nav-links .nav-cta{background:#7D6749!important;color:#fff!important;border:0}
+.oh-pill:hover,.btn-primary:hover,.nav-cta:hover,.mbar a:hover,.dark .btn-primary:hover,.cta .btn-primary:hover,.nav .nav-cta:hover,.nav-links .nav-cta:hover{background:var(--bronze-dk)!important;color:#fff!important}
+body[data-type=home] .nav.compact .nav-links .nav-cta{background:#7D6749!important;color:#fff!important;border-color:#7D6749}
+.btn-ghost{border-color:rgba(255,255,255,.35);color:#fff}
+.btn-ghost:hover{border-color:#fff;color:#fff;background:rgba(255,255,255,.05)}
+.tbc{border-color:var(--bronze);color:var(--bronze-dk);background:rgba(139,115,85,.08)}
+.dark .tbc,.panel .tbc,.footer .tbc{border-color:var(--bronze-lt);color:#E5D0B0;background:rgba(199,171,134,.12)}
+.v7h-shade{background:
+  radial-gradient(ellipse 60% 55% at 50% 50%,rgba(26,26,26,.46) 0%,rgba(26,26,26,.18) 70%,rgba(26,26,26,0) 100%),
+  linear-gradient(180deg,rgba(26,26,26,.55) 0%,rgba(26,26,26,.08) 22%,rgba(26,26,26,.08) 70%,rgba(26,26,26,.6) 100%)}
