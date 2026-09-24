@@ -197,10 +197,9 @@ def brands():
 
 def cta_band(L, title='Pricing a job? Send the plans.',
              text='Tell us the project, the finish and the program. We come back with an itemised price.',
-             img='img/services.jpg'):
+             img=None):
     return f'''<section class="cta-band">
-  <div class="hero-img" style="background-image:url('{L(img)}')"></div>
-  <div class="inner fade-up">
+  <div class="inner">
     <div><h2>{title}</h2><p>{text}</p></div>
     <div class="btns">
       <a class="btn btn-primary" href="{L('quote/')}">Request a quote</a>
@@ -210,19 +209,20 @@ def cta_band(L, title='Pricing a job? Send the plans.',
 </section>'''
 
 
-def page_hero(L, eyebrow, h1, lead, img, crumbs=None):
+def page_hero(L, eyebrow, h1, lead, img, crumbs=None, caption=''):
     cr = ''
     if crumbs:
         cr = '<div class="crumbs">' + ' / '.join(f'<a href="{L(p)}">{t}</a>' if p is not None else t for p, t in crumbs) + '</div>'
+    cap = f'<figcaption>{caption}</figcaption>' if caption else ''
     return f'''<section class="page-hero">
-  <div class="hero-img" style="background-image:url('{L(img)}')"></div>
   <div class="inner">
     {cr}
     <span class="eyebrow">{eyebrow}</span>
     <h1>{h1}</h1>
     <p class="lead">{lead}</p>
   </div>
-</section>'''
+</section>
+<figure class="photo-band"><img src="{L(img)}" alt="">{cap}</figure>'''
 
 
 def form_open(L, subject, success, extra_class=''):
@@ -239,32 +239,33 @@ def home(link):
         L = lambda p: link(p, d)
         strip = ''.join(f'<a href="{L("services/" + s["slug"] + "/")}">{s["name"]}</a>' for s in SERVICES)
         sectors = ''.join(f'''<a class="sector-card" href="{L('projects/')}#{s['key']}">
-  <img src="{L(s['img'])}" alt="" loading="lazy">
-  <div class="txt"><h3>{s['name']}</h3><p>{s['blurb']}</p><span class="arrow">See projects</span></div>
+  <div class="sector-img"><img src="{L(s['img'])}" alt="" loading="lazy"></div>
+  <h3>{s['name']}</h3><p>{s['blurb']}</p><span class="arrow">See projects</span>
 </a>''' for s in SECTORS)
         projs = ''.join(project_card(PROJ[k], L) for k in ['miami', 'multistorey', 'commercial-entry'])
         ig = ''.join(f'<a class="ig-tile" href="{u}" target="_blank" rel="noopener"><img src="{L(i)}" alt="{a}" loading="lazy"></a>' for u, i, a in IG)
         return f'''
 <section class="hero">
-  <div class="hero-img" style="background-image:url('{L('img/hero.jpg')}')"></div>
   <div class="hero-content">
     <span class="eyebrow">Solid plastering, render and architectural coatings</span>
     <h1>Finish matters.<br>So does turning up.</h1>
-    <p class="lead">A 15+ crew for builders, architects and designers from Byron Bay to South East Brisbane. Residential, multi-residential and commercial, finished to the spec and on your program.</p>
-    <div class="hero-btns">
-      <a href="{L('quote/')}" class="btn btn-primary">Request a quote</a>
-      <a href="{L('builder-pack/')}" class="btn btn-outline">Get the builder pack</a>
-    </div>
-    <div class="hero-facts">
-      <div><strong>25+ years</strong>In the trade</div>
-      <div><strong>15+ crew</strong>On the tools</div>
-      <div><strong>Byron to Brisbane</strong>Service area</div>
-      <div><strong>QBCC</strong>{tbc('licence no.')}</div>
+    <div class="hero-row">
+      <p class="lead">A 15+ crew for builders, architects and designers from Byron Bay to South East Brisbane. Residential, multi-residential and commercial, finished to the spec and on your program.</p>
+      <div class="hero-btns">
+        <a href="{L('quote/')}" class="btn btn-primary">Request a quote</a>
+        <a href="{L('builder-pack/')}" class="btn btn-outline">Get the builder pack</a>
+      </div>
     </div>
   </div>
 </section>
+<figure class="photo-band photo-band-hero"><img src="{L('img/hero.jpg')}" alt="White rendered coastal home with timber battens, Gold Coast"><figcaption>Coastal residence, Gold Coast</figcaption></figure>
+<div class="fact-bar">
+  <div><strong>25+ years</strong>In the trade</div>
+  <div><strong>15+ crew</strong>On the tools</div>
+  <div><strong>Byron to Brisbane</strong>Service area</div>
+  <div><strong>QBCC licensed</strong>{tbc('licence no.')}</div>
+</div>
 
-<nav class="service-strip" aria-label="Services">{strip}</nav>
 
 <section class="sec sec-dark" id="builder-check">
   <div class="wrap">
