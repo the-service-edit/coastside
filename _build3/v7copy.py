@@ -140,24 +140,75 @@ def install(g):
     g.update(home=home, services_hub=services_hub, service_page=service_page, about=about, builder_pack=builder_pack,
              areas_hub=areas_hub, projects_hub=projects_hub, project_page=project_page, quote=quote, contact=contact, cta=cta)
     g['FOOTER_V7'] = footer
-    # V7 only: restored project photography (Sep 2026). Galleries are overridden here so v3-v6 builds are untouched.
+    # V7 only: new project photography (Sep 2026). None of the original images are used in V7.
+    # Everything is overridden here so v3-v6 builds are untouched.
+    for sv in g['SERVICES']:
+        if sv['slug'] in V7_SERVICE_IMG:
+            sv['img'] = V7_SERVICE_IMG[sv['slug']]
+    for lo in g['LOCATIONS']:
+        if lo['slug'] in V7_LOCATION_IMG:
+            lo['img'] = V7_LOCATION_IMG[lo['slug']]
+    keep = []
     for pr in g['PROJECTS']:
-        if pr['slug'] in V7_GALLERY:
-            pr['gallery'] = V7_GALLERY[pr['slug']]
+        if pr['slug'] in V7_PROJECTS:
+            pr.update(V7_PROJECTS[pr['slug']])
+            keep.append(pr)
+    for slug, d in V7_NEW_PROJECTS.items():
+        pr = dict(d, slug=slug, builder=g['tbc']('builder'), year=g['tbc']('year'), systems=g['tbc']('system'), suburb=g['tbc']('suburb'))
+        keep.append(pr)
+    g['PROJECTS'][:] = keep
+    g['PRJ'].clear()
+    g['PRJ'].update({pr['slug']: pr for pr in keep})
+    # default share image and organisation schema image
+    _page = g['page']
+    og_map = {'hero': 'street-front', 'services': 'site-overhead', 'project-4': 'apartments-skyline',
+              'steve': 'entry-stone', 'contact': 'drone-front'}
+    def page_v7(*a, **k):
+        a = list(a)
+        if len(a) >= 8:
+            a[7] = og_map.get(a[7], a[7])
+        elif 'og' in k:
+            k['og'] = og_map.get(k['og'], k['og'])
+        else:
+            k['og'] = 'street-front'
+        return _page(*a, **k).replace('img/hero.jpg', 'img/street-front.jpg')
+    g['page'] = page_v7
+    globals()['page'] = page_v7
 
 
-V7_GALLERY = {
-    'coastal-residence': ['hero', 'cs-burleigh-4', 'cs-burleigh-1', 'cs-burleigh-6'],
-    'brakes-crescent-miami': ['ig-3', 'cs-project-front', 'steve', 'ig-1'],
+V7_SERVICE_IMG = {
+    'external-rendering': 'rear-pool',
+    'commercial-rendering': 'site-overhead',
+    'solid-plastering': 'side-elevation',
+    'architectural-coatings': 'curved-front',
+    'venetian-plaster': 'entry-stone',
+    'render-repairs': 'pool-overhead',
 }
-WORK_BAND = ('cs-reel-site-overhead', 'Overhead view of a multi-storey construction site under way')
+V7_LOCATION_IMG = {'gold-coast': 'apartments-skyline', 'northern-rivers': 'pool-overhead'}
+# Projects kept in V7, with their new photography. Projects not listed here have no new images and are hidden in V7.
+V7_PROJECTS = {
+    'brakes-crescent-miami': {'img': 'curved-front', 'gallery': ['curved-front', 'side-elevation'], 'featured': True,
+                              'alt': 'Curved rendered upper level with timber battens and a glass balcony, Brakes Crescent, Miami'},
+    'coastal-residence': {'img': 'street-front', 'gallery': ['street-front', 'entry-stone'], 'featured': True},
+    'multi-storey-residential': {'img': 'apartments-skyline', 'gallery': ['apartments-skyline', 'site-overhead'], 'featured': True,
+                                 'summary': 'Multi-storey apartment buildings in construction, with the Gold Coast skyline behind.',
+                                 'alt': 'Multi-storey apartment building under scaffold with the Gold Coast skyline behind'},
+}
+V7_NEW_PROJECTS = {
+    'contemporary-residence': {'title': 'Contemporary residence', 'location': 'gold-coast', 'services': ['external-rendering'],
+                               'sector': 'luxury', 'build': 'new', 'featured': False,
+                               'img': 'drone-front', 'gallery': ['drone-front', 'rear-pool', 'pool-overhead'],
+                               'summary': 'Rendered two-storey home with a framed upper level, glass balcony and timber battens.',
+                               'alt': 'Aerial view of a rendered two-storey home with a framed upper level and glass balcony'},
+}
+WORK_BAND = ('site-overhead', 'Overhead view of a multi-storey construction site under way')
 WORK = [
-    ('cs-interior-lobby', 'Double-height lobby with rendered walls, timber battens and pendant lights'),
-    ('cs-reel-apartments', 'Multi-storey apartment building under scaffold with the city skyline behind'),
-    ('cs-drone-home-2', 'Aerial view of a rendered two-storey home with a glass balcony and timber battens'),
-    ('cs-project-side', 'Rendered side elevation of a two-storey home with a stone base'),
-    ('cs-render-window-detail', 'Smooth rendered wall with a recessed window against a blue sky'),
-    ('cs-drone-pool-overhead', 'Overhead view of a rendered home, pool and garden'),
+    ('drone-front', 'Aerial view of a rendered two-storey home with a glass balcony and timber battens'),
+    ('curved-front', 'Curved rendered upper level with timber battens and a glass balcony'),
+    ('pool-overhead', 'Overhead view of a rendered home, pool and garden'),
+    ('entry-stone', 'Rendered curved slab over a stone-clad entry and timber door'),
+    ('apartments-skyline', 'Multi-storey apartment building under scaffold with the Gold Coast skyline behind'),
+    ('side-elevation', 'Rendered side elevation of a two-storey home with a stone base'),
 ]
 
 
@@ -370,7 +421,7 @@ def about():
     items = [('', 'Home'), (None, 'About')]
     body = page_hero(c, items, 'Coastside Solid Plastering', 'Built on the trade.<br>Built for bigger projects.',
                      ['Coastside is a second-generation plastering contractor delivering rendering, solid plastering and architectural finishes across Queensland and Northern New South Wales.'])
-    body += f'<figure class="band">{pic(c, "contact", "Coastside crew rendering a canal-front home from scaffolding", eager=True)}</figure>'
+    body += f'<figure class="band">{pic(c, "rear-pool", "Rendered two-storey home with a pool, seen from the air", eager=True)}</figure>'
     body += split('About', 'Know the system. Know the specification.',
                   ps(['The business has grown from decades on the tools into a crew of 15+ tradespeople capable of delivering substantial residential, multi-residential and commercial packages.',
                       'But growth hasn’t changed what the business is built around.'])
@@ -380,7 +431,7 @@ def about():
                       'An unusual substrate. A difficult junction. A tight construction sequence. A large elevation. A specified finish that needs to remain consistent across hundreds of square metres.',
                       'That’s where years on the tools become useful.',
                       'Not as a number on a website, but in the decisions made before and during the work.']), 'sec cream')
-    body += f'''<section class="sec"><div class="wrap grid-2"><div>{pic(c, 'steve', 'Steve on a finished rendered home', '(max-width:1100px) 100vw, 560px')}</div>
+    body += f'''<section class="sec"><div class="wrap grid-2"><div>{pic(c, 'entry-stone', 'Rendered curved slab over a stone-clad entry and timber door', '(max-width:1100px) 100vw, 560px')}</div>
 <div class="v7-copy"><span class="eyebrow">The crew</span><h2>Enough capacity to make a difference.</h2>{ps(['Coastside operates with a crew of 15+ across rendering, plastering and specialist finish work.', 'That capacity allows us to allocate labour according to project requirements rather than trying to make every job fit the same crew.', 'For larger projects, it means we can build a team around the package, stage works across elevations and maintain production as the project progresses.'])}</div></div></section>'''
     body += f'''<section class="sec dark"><div class="wrap"><div class="v7-split"><div><span class="eyebrow">Our process</span><h2>From tender to handover.</h2></div><div class="v7-copy"><p class="v7-pull">Clear scope before anyone starts.</p></div></div>{process_ol()}</div></section>'''
     body += cta(c)
