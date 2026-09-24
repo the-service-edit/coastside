@@ -140,6 +140,38 @@ def install(g):
     g.update(home=home, services_hub=services_hub, service_page=service_page, about=about, builder_pack=builder_pack,
              areas_hub=areas_hub, projects_hub=projects_hub, project_page=project_page, quote=quote, contact=contact, cta=cta)
     g['FOOTER_V7'] = footer
+    # V7 only: restored project photography (Sep 2026). Galleries are overridden here so v3-v6 builds are untouched.
+    for pr in g['PROJECTS']:
+        if pr['slug'] in V7_GALLERY:
+            pr['gallery'] = V7_GALLERY[pr['slug']]
+
+
+V7_GALLERY = {
+    'coastal-residence': ['hero', 'cs-burleigh-4', 'cs-burleigh-1', 'cs-burleigh-6'],
+    'brakes-crescent-miami': ['ig-3', 'cs-project-front', 'steve', 'ig-1'],
+}
+WORK_BAND = ('cs-reel-site-overhead', 'Overhead view of a multi-storey construction site under way')
+WORK = [
+    ('cs-interior-lobby', 'Double-height lobby with rendered walls, timber battens and pendant lights'),
+    ('cs-reel-apartments', 'Multi-storey apartment building under scaffold with the city skyline behind'),
+    ('cs-drone-home-2', 'Aerial view of a rendered two-storey home with a glass balcony and timber battens'),
+    ('cs-project-side', 'Rendered side elevation of a two-storey home with a stone base'),
+    ('cs-render-window-detail', 'Smooth rendered wall with a recessed window against a blue sky'),
+    ('cs-drone-pool-overhead', 'Overhead view of a rendered home, pool and garden'),
+]
+
+
+def work_band(c):
+    return f'<figure class="band v7-band">{pic(c, WORK_BAND[0], WORK_BAND[1])}</figure>'
+
+
+def work_grid(c):
+    L = c.L
+    figs = ''.join(f'<figure>{pic(c, n, a, "(max-width:700px) 50vw, (max-width:1400px) 33vw, 460px")}</figure>' for n, a in WORK)
+    return f'''<section class="sec v7-work-sec"><div class="wrap">
+  <div class="head-row"><div><span class="eyebrow">Recent work</span><h2>On site and finished.</h2></div><a class="text-link" href="{L('projects/')}">View projects{ARROW}</a></div>
+  <div class="v7-work">{figs}</div>
+</div></section>'''
 
 
 # ------------------------------------------------------------------ pieces
@@ -230,7 +262,7 @@ def home():
   <div class="v7-copy"><p class="v7-pull">Clear scope before anyone starts.</p><p>The easiest problems to solve on a construction project are the ones identified before work begins. Our process is designed to establish scope, specification, access, sequencing and program requirements before mobilisation.</p></div></div>
   {process_ol()}
 </div></section>'''
-    body = hero + bigger + capability + services + systems + projects + process + cta(c)
+    body = hero + bigger + work_band(c) + capability + services + work_grid(c) + systems + projects + process + cta(c)
     write('', page(c, 'Coastside Solid Plastering | Commercial rendering and solid plastering, Gold Coast',
                    'Commercial rendering, external rendering, solid plastering and architectural finishes across South East Queensland and Northern NSW. 15+ crew, pumped render, specified systems.',
                    body, 'home'))

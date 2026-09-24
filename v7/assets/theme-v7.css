@@ -294,3 +294,13 @@ body[data-type=home] .nav.compact .nav-links .nav-cta{background:#7D6749!importa
 @media (max-width:1000px){.v7-svc{grid-template-columns:40px 1fr}.v7-svc .go{justify-self:start}}
 @media (max-width:640px){.v7-systems li{flex:0 0 50%}}
 @media (max-width:640px){.v7-tiles>div:nth-child(2n),.v7-steps li:nth-child(2n),.dark .v7-tiles>div:nth-child(2n),.dark .v7-steps li:nth-child(2n){padding-left:0!important;border-left:0!important}}
+
+/* ---------- Restored photography (Sep 2026) ---------- */
+.v7-band img{height:clamp(280px,52vh,620px);filter:saturate(.86) sepia(.07)}
+.v7-work{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.v7-work figure{margin:0;overflow:hidden;background:var(--charcoal)}
+.v7-work picture{display:block;height:100%}
+.v7-work img{display:block;width:100%;height:100%;aspect-ratio:4/5;object-fit:cover;filter:saturate(.86) sepia(.07);transition:transform .9s cubic-bezier(.2,.7,.2,1)}
+.v7-work figure:hover img{transform:scale(1.025)}
+@media (max-width:700px){.v7-work{grid-template-columns:1fr 1fr;gap:8px}}
+@media (prefers-reduced-motion:reduce){.v7-work img{transition:none}.v7-work figure:hover img{transform:none}}
