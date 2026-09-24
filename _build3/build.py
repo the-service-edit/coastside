@@ -185,7 +185,7 @@ def page(c, title, desc, body, ptype='page', active=None, schema=(), og='hero', 
 <meta name="theme-color" content="#2A2A2A">
 <link rel="icon" href="{L('img/logo.png')}">
 {('<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&display=swap">') if HERO == 'strip' and ptype == 'home' else ''}
-<link rel="stylesheet" href="{L('assets/site.css')}">{('<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=IBM+Plex+Mono:wght@400;500&display=swap"><link rel="stylesheet" href="' + L('assets/theme-v6.css') + '">') if THEME == 'v6' else ''}{('<link rel="stylesheet" href="' + L('assets/palette-' + PALETTE + '.css') + '">') if PALETTE else ''}
+<link rel="stylesheet" href="{L('assets/site.css')}">{('<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=IBM+Plex+Mono:wght@400;500&display=swap"><link rel="stylesheet" href="' + L('assets/theme-v6.css') + '">') if THEME == 'v6' else ''}{('<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap"><link rel="stylesheet" href="' + L('assets/theme-v6.css') + '"><link rel="stylesheet" href="' + L('assets/theme-v7.css') + '">') if THEME == 'v7' else ''}{('<link rel="stylesheet" href="' + L('assets/palette-' + PALETTE + '.css') + '">') if PALETTE else ''}
 {ld}
 </head>
 <body data-type="{ptype}" data-slug="{slug}"{' class="oh-body"' if not chrome else ''}>
@@ -219,7 +219,7 @@ def write(path, doc):
 # ---------------------------------------------------------------- templates
 def home():
     c = Ctx('')
-    if THEME == 'v6':
+    if THEME in ('v6', 'v7'):
         return home_split(c)
     L = c.L
     featured = [p for p in PROJECTS if p['featured']][:3]
@@ -354,7 +354,30 @@ def home_split(c):
     feat = [p for p in PROJECTS if p['featured']][:3]
     work = ''.join(f'''<a class="oh-proj" href="{L("projects/" + p["slug"] + "/")}"><div class="oh-thumb">{pic(c, p["img"], p["alt"], "160px")}</div><div><span class="oh-mono">{SECTORS[p["sector"]]} / {BUILD_TYPES[p["build"]]}</span><strong>{p["title"]}</strong><em>{p["summary"]}</em></div><i aria-hidden="true">&#8599;</i></a>''' for p in feat)
     topics = ''.join(f'<option value="{s["slug"]}">{s["name"]}</option>' for s in PUB_SERVICES)
-    body = f'''<div class="oh-layout">
+    V7 = THEME == 'v7'
+    INTRO_H = ('<h2>Solid plastering and render, finished to the specification.</h2>' if V7
+               else '<h1>Solid plastering and render for Gold Coast builders.</h1>')
+    hero = f'''<section class="v7h" aria-label="Coastside Solid Plastering">
+  <picture class="v7h-bg"><source type="image/webp" srcset="{L('img/v7-hero-700.webp')} 700w, {L('img/v7-hero-1100.webp')} 1100w, {L('img/v7-hero-1672.webp')} 1672w" sizes="100vw"><img src="{L('img/v7-hero.jpg')}" alt="Curved rendered entry wall and lit bench at a Gold Coast commercial building, rendered by Coastside" width="1672" height="941" fetchpriority="high"></picture>
+  <div class="v7h-shade" aria-hidden="true"></div>
+  <header class="v7h-nav">
+    <a class="v7h-logo" href="{L('')}"><img src="{L('img/logo.png')}" alt="" width="40" height="40"><span>Coastside</span></a>
+    <nav aria-label="Main"><a href="{L('services/')}">Services</a><a href="{L('projects/')}">Projects</a><a href="{L('builder-pack/')}">Builder pack</a><a href="{L('about/')}">About</a></nav>
+    <a class="v7h-send" href="{L('quote/')}" data-track="nav_send_plans">Send plans</a>
+  </header>
+  <div class="v7h-stack">
+    <p class="v7h-kicker">Solid plastering &middot; Render &middot; Coatings</p>
+    <h1><span class="v7h-wm">coastside</span><span class="v7h-serif"><small>for</small>Gold Coast Builders</span></h1>
+  </div>
+  <div class="v7h-foot">
+    <a href="{L('quote/')}" data-track="hero_send_plans">Send plans</a>
+    <span>Byron Bay &middot; Gold Coast &middot; South East Brisbane</span>
+    <a href="{L('builder-pack/')}">Builder pack</a>
+  </div>
+  <a class="v7h-scroll" href="#intro" aria-label="Scroll to content"><span></span></a>
+</section>
+''' if V7 else ''
+    body = hero + f'''<div class="oh-layout">
 <aside class="oh-window dark" aria-label="Coastside photographs">
   {imgs}
   <a class="oh-logo" href="{L('')}"><img src="{L('img/logo.png')}" alt="Coastside Solid Plastering home" width="64" height="64"><span>Coastside<br>Solid Plastering</span></a>
@@ -368,7 +391,7 @@ def home_split(c):
   <section class="oh-chapter oh-intro" {scene('intro')}>
     <header class="oh-header"><nav aria-label="Main"><a href="{L('services/')}">Services</a><a href="{L('projects/')}">Projects</a><a href="{L('builder-pack/')}">Builder pack</a><a href="{L('resources/')}">Resources</a></nav><a href="{L('quote/')}" data-track="nav_send_plans">Send plans {arrow}</a></header>
     <p class="oh-mono">Coastside Solid Plastering</p>
-    <h1>Solid plastering and render for Gold Coast builders.</h1>
+    {INTRO_H}
     <p class="oh-lead">A 15+ crew rendering and plastering for builders, architects and developers from {SITE['area']}. Residential, multi-residential and commercial, finished to the specification and on your program.</p>
     <div class="oh-cta"><a class="oh-pill" href="{L('quote/')}" data-track="hero_send_plans">Send plans {arrow}</a><a class="oh-line" href="{L('builder-pack/')}">Builder pack {arrow}</a><p class="oh-caption">Steve, owner.<br>Second-generation plasterer.</p></div>
     <ul class="oh-stats"><li><strong>25+</strong><span>Years in the trade</span></li><li><strong>15+</strong><span>Crew on the tools</span></li><li><strong>3</strong><span>Regions, Byron to Brisbane</span></li><li><strong>QBCC</strong><span>Licensed {tbc('no.')}</span></li></ul>
