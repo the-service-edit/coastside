@@ -36,13 +36,10 @@ body{background:var(--warm) var(--tx-ivory) center/cover no-repeat fixed}
 .shero-stats i{background:var(--ochre);opacity:.6}
 .shero-text p{color:var(--ink)}
 .shero .tbc{border-color:var(--ochre-dk);color:#6b4f2e;background:rgba(196,154,108,.12)}
-/* Strip: soft, not stark. No hard curved cut; rounded frames, edges that
-   melt into the plaster at the sides, and a light warm grade so the photos
-   sit in the ivory palette. */
+/* Strip: gently softened. No hard curved cut, small rounded corners,
+   a light warm grade. */
 .shero-mask{display:none}
-.shero-strip{-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 9%,#000 91%,transparent 100%);mask-image:linear-gradient(90deg,transparent 0,#000 9%,#000 91%,transparent 100%)}
-.shero-track{gap:28px;padding:24px 18px 40px}
-.shero-track img{border-radius:22px;filter:saturate(.82) sepia(.1) brightness(1.03) contrast(.96);box-shadow:0 30px 60px -30px rgba(74,58,40,.45),0 2px 6px rgba(74,58,40,.08)}
+.shero-track img{border-radius:6px;filter:saturate(.92) sepia(.04)}
 
 /* ---------- Buttons ---------- */
 .btn-primary,.nav-cta,.mbar a,.vbtn,.skip{background:var(--ink)!important;color:var(--cream)!important;font-weight:600}
