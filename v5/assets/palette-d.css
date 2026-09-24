@@ -1,0 +1,88 @@
+/* Palette D: Sunlit Plaster (V5). Ivory and bone lime plaster, sand and ochre
+   warmth in the hollows, warm umber shadow. Sculpted-plaster imagery carries
+   the mood; ochre is decorative only (never text on light). */
+:root{
+  --ink:#2A231C;--charcoal:#2A231C;--graphite:#3A3027;
+  --lime:#E9D9BF;--lime-dk:#DCC6A3;           /* accent hook: warm bone on dark */
+  --ochre:#C49A6C;--ochre-dk:#A97E52;--taupe:#8E8579;
+  --bronze:#2A231C;--bronze-dk:#2A231C;--bronze-lt:#E9D9BF;
+  --stone:#E9E0D2;--sand:#D8C3A5;--concrete:#8E8579;--concrete-dk:#6A6158;
+  --cream:#F4EFE7;--warm:#F3EDE3;--white:#fff;--body:#4A4037;
+  --tx-ivory:url(../img/tx-ivory.webp);
+  --tx-sculpt:url(../img/tx-sculpt.webp);
+  --tx-sculpt-tall:url(../img/tx-sculpt-tall.webp);
+  --tx-dark:url(../img/tx-sculpt-dark.webp);
+}
+::selection{background:var(--sand);color:var(--ink)}
+
+/* ---------- Surfaces ---------- */
+body{background:var(--warm) var(--tx-ivory) center/cover no-repeat fixed}
+.stone,.section.alt,.band{background:var(--stone) var(--tx-ivory) center/cover no-repeat!important}
+.dark,.ink,.cta,.footer,.nav,.mbar{background-color:var(--charcoal)!important}
+.cta,.sec.dark{background-image:linear-gradient(90deg,rgba(42,35,28,.92) 0%,rgba(42,35,28,.75) 55%,rgba(42,35,28,.35) 100%),var(--tx-dark)!important;background-size:cover!important;background-position:center right!important;background-repeat:no-repeat!important}
+.footer{border-top:1px solid rgba(233,217,191,.12)}
+.dark{color:var(--cream)}
+.dark .eyebrow,.footer .eyebrow{color:var(--sand)}
+.card{background:rgba(255,255,255,.55)}
+
+/* ---------- Hero: sunlit sculpted plaster, dark text ---------- */
+.shero.dark{color:var(--ink);background-color:var(--warm)!important;
+  background-image:linear-gradient(180deg,rgba(243,237,227,.92) 0%,rgba(243,237,227,.55) 38%,rgba(243,237,227,.15) 62%,rgba(243,237,227,.85) 100%),var(--tx-sculpt)!important;
+  background-size:cover!important;background-position:center!important;background-repeat:no-repeat!important}
+.shero-head h1{color:var(--ink)}
+.shero .eyebrow{color:var(--concrete-dk)}
+.shero-stats strong{color:var(--ink)}
+.shero-stats span{color:var(--concrete-dk)}
+.shero-stats i{background:var(--ochre);opacity:.6}
+.shero-text p{color:var(--ink)}
+.shero .tbc{border-color:var(--ochre-dk);color:#6b4f2e;background:rgba(196,154,108,.12)}
+/* curved strip edges: clip the strip itself so the plaster shows through */
+.shero-mask{display:none}
+.shero-strip{
+  --m:clamp(28px,5vw,72px);
+  -webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 60' preserveAspectRatio='none'%3E%3Cpath d='M0 8Q500 70 1000 8V60H0Z'/%3E%3C/svg%3E"),linear-gradient(#000,#000),url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 60' preserveAspectRatio='none'%3E%3Cpath d='M0 0H1000V52Q500 -10 0 52Z'/%3E%3C/svg%3E");
+  mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 60' preserveAspectRatio='none'%3E%3Cpath d='M0 8Q500 70 1000 8V60H0Z'/%3E%3C/svg%3E"),linear-gradient(#000,#000),url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 60' preserveAspectRatio='none'%3E%3Cpath d='M0 0H1000V52Q500 -10 0 52Z'/%3E%3C/svg%3E");
+  -webkit-mask-size:100% var(--m),100% calc(100% - 2 * var(--m) + 2px),100% var(--m);mask-size:100% var(--m),100% calc(100% - 2 * var(--m) + 2px),100% var(--m);
+  -webkit-mask-position:top,center,bottom;mask-position:top,center,bottom;
+  -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat}
+
+/* ---------- Buttons ---------- */
+.btn-primary,.nav-cta,.mbar a,.vbtn,.skip{background:var(--ink)!important;color:var(--cream)!important;font-weight:600}
+.btn-primary:hover,.nav-cta:hover,.mbar a:hover,.vbtn:hover{background:#17120d!important}
+.nav .nav-cta,.nav-links .nav-cta,.dark:not(.shero) .btn-primary,.cta .btn-primary,.mbar a{background:var(--lime)!important;color:var(--ink)!important}
+.nav .nav-cta:hover,.nav-links .nav-cta:hover,.dark:not(.shero) .btn-primary:hover,.cta .btn-primary:hover{background:#fff!important}
+.shero .btn-ghost{border-color:rgba(42,35,28,.45);color:var(--ink)}
+.shero .btn-ghost:hover{border-color:var(--ink);background:rgba(42,35,28,.06);color:var(--ink)}
+.btn-ghost{border-color:rgba(233,217,191,.45)}
+.btn-ghost:hover{border-color:var(--lime);color:var(--lime)}
+
+/* ---------- Markers: ochre hairlines ---------- */
+.nav-links a:hover,.nav-links a[aria-current=page]{border-bottom-color:var(--ochre)}
+.eyebrow{display:flex;align-items:center;gap:12px}
+.eyebrow::before{content:'';width:22px;height:1px;background:var(--ochre);flex:none}
+.shero-head .eyebrow{justify-content:center}
+.dark .steps li::before,.panel ol li::before{color:var(--ochre)}
+.ticks li::before,.prose li::before,.dark .ticks li::before{background:var(--ochre)}
+.definition{border-left:2px solid var(--ochre);box-shadow:none}
+.text-link{color:var(--ink);border-bottom:1px solid var(--ochre);padding-bottom:3px}
+.text-link:hover{color:var(--ochre-dk);background:none}
+.dark .text-link,.check .text-link{color:var(--cream);border-bottom-color:var(--ochre)}
+.dark .text-link:hover{background:none;color:var(--lime)}
+.card:hover h3{color:var(--ink);text-decoration:underline;text-decoration-color:var(--ochre);text-decoration-thickness:1px;text-underline-offset:5px}
+.card .more,.svc-row .go{color:var(--ink);border-bottom:1px solid var(--ochre);align-self:flex-start;padding-bottom:2px}
+.svc-row:hover{box-shadow:inset 2px 0 0 var(--ochre)}
+.stepper li.on{border-top-color:var(--ochre);box-shadow:none}
+.checks input{accent-color:var(--ink)}
+.choice input:checked+span{background:var(--ink);border-color:var(--ink);color:var(--cream)}
+:focus-visible{outline:2px solid var(--ink);outline-offset:3px;box-shadow:none}
+.dark :focus-visible{outline-color:var(--lime)}
+
+/* ---------- Chips for unconfirmed facts ---------- */
+.tbc{border-color:var(--ochre-dk);color:#6b4f2e;background:rgba(196,154,108,.1)}
+.dark .tbc,.panel .tbc,.footer .tbc{border-color:rgba(233,217,191,.6);color:var(--lime);background:rgba(233,217,191,.08)}
+.dark.shero .tbc{border-color:var(--ochre-dk);color:#6b4f2e;background:rgba(196,154,108,.12)}
+
+@media (max-width:767px){
+  .shero-head .eyebrow::before{display:none}
+  .shero.dark{background-image:linear-gradient(180deg,rgba(243,237,227,.9) 0%,rgba(243,237,227,.5) 40%,rgba(243,237,227,.2) 65%,rgba(243,237,227,.9) 100%),var(--tx-sculpt-tall)!important}
+}
