@@ -217,7 +217,8 @@ def home():
     L = c.L
     featured = [p for p in PROJECTS if p['featured']][:3]
     hero = f'''<section class="v7h" aria-labelledby="h1">
-  <picture class="v7h-bg"><source type="image/webp" srcset="{L('img/v7-hero-700.webp')} 700w, {L('img/v7-hero-1100.webp')} 1100w, {L('img/v7-hero-1672.webp')} 1672w" sizes="100vw"><img src="{L('img/v7-hero.jpg')}" alt="Curved rendered entry wall and lit bench at a Gold Coast commercial building, rendered by Coastside" width="1672" height="941" fetchpriority="high"></picture>
+  <div class="v7h-bg"><video class="v7h-video" autoplay muted loop playsinline preload="metadata" poster="{L('img/v7-hero-poster.jpg')}" aria-hidden="true"><source src="{L('img/v7-hero.mp4')}" type="video/mp4"></video></div>
+  <script>(function(){{var v=document.querySelector('.v7h-video');if(v&&window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches){{v.removeAttribute('autoplay');v.pause();}}}})();</script>
   <div class="v7h-shade" aria-hidden="true"></div>
   <div class="v7h-stack">
     <p class="v7h-kicker">Commercial rendering &middot; Solid plastering &middot; Architectural finishes</p>
