@@ -1,0 +1,53 @@
+/* Palette B: Hi-vis Crew. Concrete and graphite, with signal lime (from the crew shirts)
+   used only for buttons and small markers. Loaded after site.css. */
+:root{
+  --ink:#161715;--charcoal:#1E1F1C;--graphite:#2B2C28;
+  --lime:#C8F03C;--lime-dk:#B3DB25;
+  --bronze:#1E1F1C;--bronze-dk:#1E1F1C;--bronze-lt:#C8F03C;   /* old accent tokens remapped */
+  --stone:#DAD9D3;--sand:#C9C8C2;--concrete:#8A8B85;--concrete-dk:#5E605A;
+  --cream:#E6E5E1;--warm:#EFEEEA;--white:#fff;--body:#3C3D39;
+}
+body{background:var(--warm)}
+::selection{background:var(--lime);color:var(--ink)}
+
+/* Buttons and CTA fills: lime with graphite text */
+.btn-primary,.nav-cta,.mbar a,.vbtn,.skip{background:var(--lime)!important;color:var(--ink)!important}
+.btn-primary:hover,.nav-cta:hover,.mbar a:hover,.vbtn:hover{background:var(--lime-dk)!important}
+.btn-primary,.nav-cta,.mbar a{font-weight:600}
+.btn-ghost{border-color:rgba(255,255,255,.45)}
+.btn-ghost:hover{border-color:var(--lime);color:var(--lime)}
+
+/* Markers on dark: lime. On light: graphite. */
+.nav-links a:hover,.nav-links a[aria-current=page]{border-bottom-color:var(--lime)}
+.dark .eyebrow::before,.ink .eyebrow::before,.cta .eyebrow::before{background:var(--lime)}
+.eyebrow{display:flex;align-items:center;gap:10px}
+.eyebrow::before{content:'';width:8px;height:8px;background:var(--ink);flex:none}
+.shero-head .eyebrow{justify-content:center}
+.dark .steps li::before,.panel ol li::before{color:var(--lime)}
+.dark .ticks li::before{background:var(--lime)}
+.definition{border-left:4px solid var(--lime);box-shadow:-4px 0 0 0 var(--ink)}
+.text-link{color:var(--ink);border-bottom:2px solid var(--lime);padding-bottom:3px}
+.text-link:hover{color:var(--ink);background:var(--lime)}
+.dark .text-link,.check .text-link{color:var(--white);border-bottom-color:var(--lime)}
+.dark .text-link:hover{background:var(--lime);color:var(--ink)}
+.card .tag{color:var(--concrete-dk)}
+.card:hover h3{color:var(--ink);text-decoration:underline;text-decoration-color:var(--lime);text-decoration-thickness:3px;text-underline-offset:4px}
+.card .more,.svc-row .go{color:var(--ink);border-bottom:2px solid var(--lime);align-self:flex-start;padding-bottom:2px}
+.svc-row:hover{box-shadow:inset 4px 0 0 var(--lime)}
+.faq summary::after{border-color:var(--ink)}
+.stepper li.on{border-top-color:var(--lime);box-shadow:0 -3px 0 0 var(--ink)}
+.checks input{accent-color:var(--ink)}
+.choice input:checked+span{background:var(--ink);border-color:var(--ink);color:var(--lime)}
+:focus-visible{outline:2px solid var(--ink);outline-offset:3px;box-shadow:0 0 0 5px var(--lime)}
+.dark :focus-visible{outline-color:var(--lime);box-shadow:none}
+
+/* Chips for unconfirmed facts stay visible but neutral */
+.tbc{border-color:#8a6d00;color:#5c4a00;background:rgba(200,240,60,.25)}
+.dark .tbc,.panel .tbc,.footer .tbc{border-color:var(--lime);color:var(--lime);background:rgba(200,240,60,.1)}
+
+/* Hero bits */
+.shero-stats strong{color:var(--white)}
+.shero-stats i{background:var(--lime);opacity:.6}
+.vbadge-l{background:var(--ink);color:var(--lime)}
+.vcard-main h1 span{color:var(--concrete-dk)}
+.nav-links .nav-cta{color:var(--ink)!important}

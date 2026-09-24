@@ -1,0 +1,3 @@
+User-agent: *
+Disallow: /
+Sitemap: https://coastside.theserviceedit.com/v6/sitemap.xml

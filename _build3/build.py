@@ -18,7 +18,8 @@ SITE_URL = os.environ.get('SITE_URL', 'https://coastside.theserviceedit.com/v3/'
 EXPLICIT = os.environ.get('EXPLICIT_INDEX', '1') == '1'
 CONCEPT = os.environ.get('CONCEPT', '1') == '1'
 HERO = os.environ.get('HERO', 'cards')
-PALETTE = os.environ.get('PALETTE', '')  # e.g. 'b' loads assets/palette-b.css  # 'cards' (v3) or 'strip' (v4)
+PALETTE = os.environ.get('PALETTE', '')
+THEME = os.environ.get('THEME', '')  # 'v6' = split 'open house' home + DM Sans / Plex Mono type  # e.g. 'b' loads assets/palette-b.css  # 'cards' (v3) or 'strip' (v4)
 IMG_DIR = os.path.join(OUT, 'img')
 E = html.escape
 
@@ -143,13 +144,20 @@ def steps_ol():
 
 
 # ---------------------------------------------------------------- layout
-def page(c, title, desc, body, ptype='page', active=None, schema=(), og='hero', slug='', index=True):
+def page(c, title, desc, body, ptype='page', active=None, schema=(), og='hero', slug='', index=True, chrome=True):
     L = c.L
     noindex = CONCEPT or not index
     cur = ' aria-current="page"'
     navl = ''.join(f'<li><a href="{L(p)}"{cur if active == p else ""}>{t}</a></li>' for p, t in NAV)
     mnav = ''.join(f'<a href="{L(p)}">{t}</a>' for p, t in [('', 'Home')] + NAV + [('about/', 'About'), ('contact/', 'Contact')])
     canon = SITE_URL + c.path
+    HEADER = f'''<header class="nav">
+  <a class="nav-logo" href="{L('')}"><img src="{L('img/logo.png')}" alt="" width="52" height="52"><span>Coastside<br>Solid Plastering</span><span class="sr">Home</span></a>
+  <nav aria-label="Main"><ul class="nav-links">{navl}<li><a class="nav-cta" href="{L('quote/')}" data-track="nav_send_plans">Send plans</a></li></ul></nav>
+  <button class="nav-toggle" aria-controls="mnav" aria-expanded="false" aria-label="Open menu"><span></span><span></span><span></span></button>
+</header>
+<div class="mnav" id="mnav" role="dialog" aria-label="Menu"><button class="close" aria-label="Close menu">&times;</button>{mnav}<a class="btn btn-primary" href="{L('quote/')}">Send plans</a></div>
+'''
     org = {"@context": "https://schema.org", "@type": "HomeAndConstructionBusiness", "@id": SITE_URL + "#business",
            "name": SITE['name'], "legalName": SITE['legal'], "taxID": SITE['abn'], "telephone": SITE['phone_tel'], "email": SITE['email'],
            "url": SITE_URL, "logo": SITE_URL + "img/logo.png", "image": SITE_URL + "img/hero.jpg",
@@ -177,18 +185,12 @@ def page(c, title, desc, body, ptype='page', active=None, schema=(), og='hero', 
 <meta name="theme-color" content="#2A2A2A">
 <link rel="icon" href="{L('img/logo.png')}">
 {('<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&display=swap">') if HERO == 'strip' and ptype == 'home' else ''}
-<link rel="stylesheet" href="{L('assets/site.css')}">{('<link rel="stylesheet" href="' + L('assets/palette-' + PALETTE + '.css') + '">') if PALETTE else ''}
+<link rel="stylesheet" href="{L('assets/site.css')}">{('<link rel="stylesheet" href="' + L('assets/palette-' + PALETTE + '.css') + '">') if PALETTE else ''}{('<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=IBM+Plex+Mono:wght@400;500&display=swap"><link rel="stylesheet" href="' + L('assets/theme-v6.css') + '">') if THEME == 'v6' else ''}
 {ld}
 </head>
-<body data-type="{ptype}" data-slug="{slug}">
+<body data-type="{ptype}" data-slug="{slug}"{' class="oh-body"' if not chrome else ''}>
 <a class="skip" href="#main">Skip to content</a>
-<header class="nav">
-  <a class="nav-logo" href="{L('')}"><img src="{L('img/logo.png')}" alt="" width="52" height="52"><span>Coastside<br>Solid Plastering</span><span class="sr">Home</span></a>
-  <nav aria-label="Main"><ul class="nav-links">{navl}<li><a class="nav-cta" href="{L('quote/')}" data-track="nav_send_plans">Send plans</a></li></ul></nav>
-  <button class="nav-toggle" aria-controls="mnav" aria-expanded="false" aria-label="Open menu"><span></span><span></span><span></span></button>
-</header>
-<div class="mnav" id="mnav" role="dialog" aria-label="Menu"><button class="close" aria-label="Close menu">&times;</button>{mnav}<a class="btn btn-primary" href="{L('quote/')}">Send plans</a></div>
-<main id="main">
+{HEADER if chrome else ''}<main id="main">
 {body}
 </main>
 <footer class="footer dark">
@@ -201,7 +203,7 @@ def page(c, title, desc, body, ptype='page', active=None, schema=(), og='hero', 
   </div>
   <div class="fbase"><span>&copy; 2026 {SITE['legal']}. <a href="{L('privacy/')}">Privacy</a></span><span>Site by <a href="https://theserviceedit.com" rel="noopener" target="_blank">The Service Edit</a></span></div>
 </footer>
-{'' if ptype in ('quote','quote-received','tender') else '<div class="mbar"><a href="' + L('quote/') + '" data-track="mbar_send_plans">Send plans</a></div>'}
+{'' if (ptype in ('quote','quote-received','tender') or not chrome) else '<div class="mbar"><a href="' + L('quote/') + '" data-track="mbar_send_plans">Send plans</a></div>'}
 <script src="{L('assets/site.js')}" defer></script>
 </body>
 </html>
@@ -217,6 +219,8 @@ def write(path, doc):
 # ---------------------------------------------------------------- templates
 def home():
     c = Ctx('')
+    if THEME == 'v6':
+        return home_split(c)
     L = c.L
     featured = [p for p in PROJECTS if p['featured']][:3]
     if HERO == 'strip':
@@ -319,6 +323,126 @@ def home():
     write('', page(c, 'Coastside Solid Plastering | Render and solid plastering contractor, Gold Coast',
                    'Solid plastering, external render and architectural coatings for builders from Byron Bay to South East Brisbane. 15+ crew. Send plans for an itemised price.',
                    body, 'home'))
+
+
+# ---------------------------------------------------------------- V6: split 'open house' home
+SCENES = [
+    ('intro', 'hero', 'White rendered coastal home, Gold Coast', 'Finish matters.<br>So does turning up.', '01 / Gold Coast, Queensland'),
+    ('services', 'services', 'Coastside crew pumping and finishing render', 'Render, plaster<br>and coatings.', '02 / Services'),
+    ('check', 'contact', 'Coastside crew rendering a canal-front home from scaffolding', 'Checked before<br>you call.', '03 / The builder check'),
+    ('work', 'project-4', 'Multi-storey residential building with curved rendered balconies', 'Recent work.', '04 / Case studies'),
+    ('steve', 'steve', 'Steve on a finished rendered home', 'Steve.<br>Second generation.', '05 / Owner'),
+    ('builders', 'ig-5', 'Coastside plasterer rendering from scaffolding', 'Pricing a job?', '06 / For builders'),
+    ('contact', 'ig-3', 'Rendered coastal home at Brakes Crescent, Miami', 'Send the plans.', '07 / Contact'),
+]
+
+
+def home_split(c):
+    L = c.L
+    imgs = ''.join(f'<div class="oh-img{" is-visible" if i == 0 else ""}" data-image="{k}">{pic(c, img, alt, "(max-width:700px) 100vw, 43vw", eager=(i == 0))}</div>'
+                   for i, (k, img, alt, t, lab) in enumerate(SCENES))
+    cur_attr = ' aria-current="true"'
+    rail = ''.join(f'<a href="#{k}" aria-label="{lab.split(" / ")[1]}"{cur_attr if i == 0 else ""}></a>' for i, (k, img, alt, t, lab) in enumerate(SCENES))
+    def scene(k):
+        sc = next(x for x in SCENES if x[0] == k)
+        return f'id="{k}" data-scene="{k}" data-title="{E(sc[3])}" data-label="{E(sc[4])}"'
+    def idx(n, label):
+        return f'<div class="oh-index"><span>{n}</span><span>{label}</span></div>'
+    arrow = '<span aria-hidden="true">&#8599;</span>'
+    svc = ''.join(f'''<details><summary><span>{i:02d}</span>{s["name"]}</summary><p>{s["short"]} <a href="{L("services/" + s["slug"] + "/")}">View service</a></p></details>''' for i, s in enumerate(PUB_SERVICES, 1))
+    systems = ''.join(f'<li>{x}</li>' for x in SITE['systems']) + f'<li class="oh-more"><a href="{L("quote/")}">Your spec {arrow}</a></li>'
+    feat = [p for p in PROJECTS if p['featured']][:3]
+    work = ''.join(f'''<a class="oh-proj" href="{L("projects/" + p["slug"] + "/")}"><div class="oh-thumb">{pic(c, p["img"], p["alt"], "160px")}</div><div><span class="oh-mono">{SECTORS[p["sector"]]} / {BUILD_TYPES[p["build"]]}</span><strong>{p["title"]}</strong><em>{p["summary"]}</em></div><i aria-hidden="true">&#8599;</i></a>''' for p in feat)
+    topics = ''.join(f'<option value="{s["slug"]}">{s["name"]}</option>' for s in PUB_SERVICES)
+    body = f'''<div class="oh-layout">
+<aside class="oh-window dark" aria-label="Coastside photographs">
+  {imgs}
+  <a class="oh-logo" href="{L('')}"><img src="{L('img/logo.png')}" alt="Coastside Solid Plastering home" width="64" height="64"><span>Coastside<br>Solid Plastering</span></a>
+  <div class="oh-topline"><span>COASTSIDE / GOLD COAST</span><span>28.0&deg; S</span></div>
+  <div class="oh-bottom"><p class="oh-title" id="scene-title">Finish matters.<br>So does turning up.</p><div class="oh-mono oh-eyeline"><span id="scene-label">01 / Gold Coast, Queensland</span><span>SCROLL TO EXPLORE &darr;</span></div></div>
+  <nav class="oh-rail" aria-label="Sections">{rail}</nav>
+</aside>
+<div class="oh-content">
+  <nav class="oh-mobile-nav" aria-label="Main"><a href="{L('services/')}">Services</a><a href="{L('projects/')}">Projects</a><a href="{L('builder-pack/')}">Builder pack</a><a href="{L('service-areas/')}">Areas</a><a href="{L('quote/')}">Send plans {arrow}</a></nav>
+
+  <section class="oh-chapter oh-intro" {scene('intro')}>
+    <header class="oh-header"><nav aria-label="Main"><a href="{L('services/')}">Services</a><a href="{L('projects/')}">Projects</a><a href="{L('builder-pack/')}">Builder pack</a><a href="{L('resources/')}">Resources</a></nav><a href="{L('quote/')}" data-track="nav_send_plans">Send plans {arrow}</a></header>
+    <p class="oh-mono">Coastside Solid Plastering</p>
+    <h1>Solid plastering and render for Gold Coast builders.</h1>
+    <p class="oh-lead">A 15+ crew rendering and plastering for builders, architects and developers from {SITE['area']}. Residential, multi-residential and commercial, finished to the specification and on your program.</p>
+    <div class="oh-cta"><a class="oh-pill" href="{L('quote/')}" data-track="hero_send_plans">Send plans {arrow}</a><a class="oh-line" href="{L('builder-pack/')}">Builder pack {arrow}</a><p class="oh-caption">Steve, owner.<br>Second-generation plasterer.</p></div>
+    <ul class="oh-stats"><li><strong>25+</strong><span>Years in the trade</span></li><li><strong>15+</strong><span>Crew on the tools</span></li><li><strong>3</strong><span>Regions, Byron to Brisbane</span></li><li><strong>QBCC</strong><span>Licensed {tbc('no.')}</span></li></ul>
+  </section>
+
+  <section class="oh-chapter oh-services" {scene('services')}>
+    {idx('02', 'Services')}
+    <h2>Render, plaster<br>and coatings.</h2>
+    <div class="oh-acc">{svc}</div>
+    <p class="oh-mono oh-also">Every service page covers scope, substrates, sequencing, scaffold, curing and <a href="{L('resources/what-to-send-for-a-render-quote/')}">what we need to price it</a>.</p>
+    <div class="oh-systems"><p class="oh-mono">Systems we apply</p><h3>Priced and applied to your specification.</h3><ul>{systems}</ul></div>
+  </section>
+
+  <section class="oh-chapter oh-check dark" {scene('check')}>
+    {idx('03', 'The builder check')}
+    <h2>What you check<br>before you call.</h2>
+    <p class="oh-lead">New to Coastside? These are the questions most builders ask before a first job. The paperwork is in the builder pack.</p>
+    <ul class="oh-list">
+      <li><span>01</span><b>Licensed</b><em>QBCC licence {tbc('number and class')}</em></li>
+      <li><span>02</span><b>Insured</b><em>Public liability {tbc('cover')} and workers compensation, certificates on request</em></li>
+      <li><span>03</span><b>Crew</b><em>15+ on the tools, pumped render for large elevations</em></li>
+      <li><span>04</span><b>Systems</b><em>{', '.join(SITE['systems'])}</em></li>
+      <li><span>05</span><b>Track record</b><em>Luxury residential, multi-residential, commercial</em></li>
+      <li><span>06</span><b>Safety</b><em>SWMS for each job {tbc('confirm')}</em></li>
+    </ul>
+    <a class="oh-pill" href="{L('builder-pack/')}">Get the builder pack {arrow}</a>
+  </section>
+
+  <section class="oh-chapter oh-work" {scene('work')}>
+    {idx('04', 'Recent work')}
+    <h2>Case studies.</h2>
+    <p class="oh-lead">Scope, systems and what made each job hard, with the builder named where they agreed.</p>
+    <div class="oh-projs">{work}</div>
+    <a class="oh-line" href="{L('projects/')}">All projects {arrow}</a>
+  </section>
+
+  <section class="oh-chapter oh-steve" {scene('steve')}>
+    {idx('05', 'Owner')}
+    <h2>Steve.</h2>
+    <div class="oh-portrait">{pic(c, 'steve', 'Steve on a finished rendered home', '140px')}</div>
+    <p class="oh-lead">Second-generation plasterer. Steve grew up in the trade and now runs a 15+ crew across residential and commercial sites every week. From architectural coatings to large-scale commercial pumping, it is the same standard every time.</p>
+    <div class="oh-award"><strong>25+</strong><p>years on the tools, from Byron Bay to South East Brisbane.</p></div>
+    <blockquote>{tbc('Builder testimonial, with permission')}<cite>{tbc('Name, company')}</cite></blockquote>
+    <a class="oh-line" href="{L('about/')}">About Coastside {arrow}</a>
+  </section>
+
+  <section class="oh-chapter oh-tools" {scene('builders')}>
+    {idx('06', 'For builders')}
+    <h2>Pricing a job?</h2>
+    <p class="oh-lead">Everything a builder, estimator or site manager needs, one click away.</p>
+    <nav class="oh-links" aria-label="For builders">
+      <a href="{L('quote/')}">Send plans for an itemised quote</a>
+      <a href="{L('resources/what-to-send-for-a-render-quote/')}">What to send for an accurate render quote</a>
+      <a href="{L('builder-pack/')}">Builder pack: licence, insurance, SWMS</a>
+      <a href="{L('builder-pack/tender-list/')}">Add Coastside to your tender list</a>
+      <a href="{L('service-areas/')}">Service areas</a>
+    </nav>
+  </section>
+
+  <section class="oh-chapter oh-contact dark" {scene('contact')}>
+    {idx('07', 'Contact')}
+    <h2>Send Coastside<br>the plans.</h2>
+    <p class="oh-lead">Plans, elevations, the finish schedule and your program. We come back with an itemised price.</p>
+    <label class="oh-mono" for="oh-topic">What is the job?</label>
+    <select id="oh-topic" class="oh-select"><option value="">Choose a service</option>{topics}</select>
+    <a class="oh-big" id="oh-go" href="{L('quote/')}" data-track="contact_send_plans">Start your enquiry {arrow}</a>
+    <p class="oh-small">Or email <a href="mailto:{SITE['email']}">{SITE['email']}</a> &middot; {SITE['phone']}</p>
+    <div class="oh-office"><span>COASTSIDE SOLID PLASTERING<br>ABN {SITE['abn']}</span><span>Gold Coast, Queensland<br>{SITE['area']}</span></div>
+  </section>
+</div>
+</div>'''
+    write('', page(c, 'Coastside Solid Plastering | Render and solid plastering contractor, Gold Coast',
+                   'Solid plastering, external render and architectural coatings for builders from Byron Bay to South East Brisbane. 15+ crew. Send plans for an itemised price.',
+                   body, 'home', chrome=False))
 
 
 def services_hub():
