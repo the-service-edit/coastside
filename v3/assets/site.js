@@ -56,19 +56,26 @@
   var hv=d.querySelector('.vhero-video');
   if(hv&&w.matchMedia&&w.matchMedia('(prefers-reduced-motion: reduce)').matches){hv.removeAttribute('autoplay');hv.pause()}
 
-  /* ---------- hero gallery drift: slides across and back, 30s+ each way ---------- */
+  /* ---------- hero gallery: moves sideways as you scroll down ---------- */
   var track=d.querySelector('.shero-track');
-  if(track){
-    var strip=track.parentNode;
-    var setDrift=function(){
-      var dist=Math.max(0,track.scrollWidth-strip.clientWidth);
-      track.style.setProperty('--dist',dist+'px');
-      track.style.setProperty('--dur',Math.max(30,Math.round(dist/110))+'s');
-      track.classList.toggle('drift',dist>0);
+  if(track&&!(w.matchMedia&&w.matchMedia('(prefers-reduced-motion: reduce)').matches)){
+    var strip=track.parentNode,dist=0,target=0,cur=0,ticking=false,SPEED=0.55;
+    var measure=function(){dist=Math.max(0,track.scrollWidth-strip.clientWidth);update()};
+    var update=function(){
+      var top=strip.getBoundingClientRect().top+w.scrollY;           // strip position on the page
+      var start=Math.max(0,top-w.innerHeight);                        // begins as the strip comes into view
+      target=Math.min(dist,Math.max(0,(w.scrollY-start)*SPEED));
+      if(!ticking){ticking=true;requestAnimationFrame(step)}
     };
-    setDrift();w.addEventListener('load',setDrift);
-    var rt;w.addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(setDrift,150)});
-    if('IntersectionObserver' in w){new IntersectionObserver(function(es){track.style.animationPlayState=es[0].isIntersecting?'':'paused'}).observe(strip)}
+    var step=function(){
+      cur+=(target-cur)*0.12;                                         // eased follow, no jumps
+      if(Math.abs(target-cur)<0.3)cur=target;
+      track.style.transform='translate3d('+(-cur).toFixed(1)+'px,0,0)';
+      if(cur!==target)requestAnimationFrame(step);else ticking=false;
+    };
+    w.addEventListener('scroll',update,{passive:true});
+    var rt;w.addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(measure,150)});
+    w.addEventListener('load',measure);measure();
   }
 
   /* ---------- nav ---------- */
