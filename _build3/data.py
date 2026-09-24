@@ -23,6 +23,7 @@ SITE = {
     'instagram': 'https://www.instagram.com/coast_side_plastering/',
     'area': 'Byron Bay to the Gold Coast to South East Brisbane',
     'systems': ['Dulux AcraTex', 'Rockcote', 'Unitex', 'Resene', 'Boral'],
+    'hero_video': None,  # e.g. 'video/hero.mp4' once Steve supplies site footage (Instagram reels, with permission)
     'web3forms_key': '2870139d-38b7-4118-9f7c-9217fd52c463',  # TSE key until the Supabase endpoint is live
 }
 

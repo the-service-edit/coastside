@@ -49,6 +49,13 @@
     if(a.dataset.track)track(a.dataset.track,{label:a.dataset.label||''});
   });
 
+  /* ---------- hero entrance + video respects reduced motion ---------- */
+  var rises=d.querySelectorAll('.rise');
+  if('IntersectionObserver' in w){var ro=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');ro.unobserve(e.target)}})},{threshold:.1});rises.forEach(function(el){ro.observe(el)})}
+  else rises.forEach(function(el){el.classList.add('in')});
+  var hv=d.querySelector('.vhero-video');
+  if(hv&&w.matchMedia&&w.matchMedia('(prefers-reduced-motion: reduce)').matches){hv.removeAttribute('autoplay');hv.pause()}
+
   /* ---------- nav ---------- */
   var nav=d.querySelector('.nav');
   if(nav){var onS=function(){nav.classList.toggle('compact',w.scrollY>40)};w.addEventListener('scroll',onS,{passive:true});onS()}
@@ -64,7 +71,7 @@
   var bar=d.querySelector('.mbar');
   if(bar&&'IntersectionObserver' in w){
     var seen=new Set();var io=new IntersectionObserver(function(es){es.forEach(function(e){e.isIntersecting?seen.add(e.target):seen.delete(e.target)});bar.classList.toggle('hide',seen.size>0)});
-    d.querySelectorAll('form,.footer,.cta').forEach(function(el){io.observe(el)});
+    d.querySelectorAll('form,.footer,.cta,.vhero').forEach(function(el){io.observe(el)});
   }
 
   /* ---------- project filters (URL-driven, work without JS as plain links) ---------- */

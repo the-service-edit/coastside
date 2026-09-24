@@ -210,17 +210,28 @@ def home():
     L = c.L
     featured = [p for p in PROJECTS if p['featured']][:3]
     body = f'''
-<section class="hero dark">
-  <div class="wrap">
-    <span class="eyebrow">Solid plastering, render and architectural coatings</span>
-    <h1>Finish matters.<br>So does turning up.</h1>
-    <div class="hero-row">
-      <p class="lead">A 15+ crew rendering and plastering for builders, architects and developers from {SITE['area']}. Residential, multi-residential and commercial, finished to the specification and on your program.</p>
-      <div class="btns"><a class="btn btn-primary" href="{L('quote/')}" data-track="hero_send_plans">Send plans</a><a class="btn btn-ghost" href="{L('builder-pack/')}">Builder pack</a></div>
+<section class="vhero" aria-label="Introduction">
+  <div class="vhero-media">
+    {pic(c, 'hero', 'White rendered coastal home with timber battens, Gold Coast', eager=True)}
+    {('<video class="vhero-video" autoplay muted loop playsinline preload="metadata" poster="' + L('img/hero.jpg') + '" aria-hidden="true"><source src="' + L(SITE['hero_video']) + '" type="video/mp4"></video>') if SITE.get('hero_video') else ''}
+    <span class="vhero-cap">Coastal residence, Gold Coast</span>
+  </div>
+  <div class="vhero-inner">
+    <div class="vhero-grid">
+      <div class="vcard vcard-main rise">
+        <a class="vbadge" href="{L('builder-pack/')}"><span class="vbadge-l">For builders</span><span>Licence, insurance and capability in one place</span><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6 12L10 8L6 4" stroke="currentColor" stroke-opacity=".55" stroke-width="2" stroke-linecap="square"/></svg></a>
+        <h1>Finish matters. <span>So does turning up.</span></h1>
+      </div>
+      <div class="vside">
+        <div class="vcard rise" style="--d:100ms"><p>A 15+ crew rendering and plastering for builders, architects and developers from {SITE['area']}. Finished to the specification and on your program.</p></div>
+        <div class="vcard vcard-cta rise" style="--d:200ms">
+          <a class="vbtn" href="{L('quote/')}" data-track="hero_send_plans"><span class="vbtn-mask"><span class="vbtn-roll"><span>Send plans</span><span aria-hidden="true">Send plans</span></span></span><span class="vbtn-arrow" aria-hidden="true"><span class="vbtn-roll"><svg viewBox="0 0 13 14" fill="none"><path d="M1.33 7H10M6 2.33 10.67 7 6 11.67" stroke="currentColor" stroke-width="2" stroke-linecap="square"/></svg><svg viewBox="0 0 13 14" fill="none"><path d="M1.33 7H10M6 2.33 10.67 7 6 11.67" stroke="currentColor" stroke-width="2" stroke-linecap="square"/></svg></span></span></a>
+          <a class="text-link" href="{L('projects/')}">See the work</a>
+        </div>
+      </div>
     </div>
   </div>
 </section>
-<figure class="band tall">{pic(c, 'hero', 'White rendered coastal home with timber battens, Gold Coast', eager=True)}<figcaption>Coastal residence, Gold Coast</figcaption></figure>
 <div class="facts"><div><strong>25+ years</strong><span>In the trade</span></div><div><strong>15+ crew</strong><span>On the tools</span></div><div><strong>Byron to Brisbane</strong><span>Service area</span></div><div><strong>QBCC licensed</strong><span>{tbc('licence no.')}</span></div></div>
 
 <section class="sec dark" aria-labelledby="bc">

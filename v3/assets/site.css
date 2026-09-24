@@ -358,3 +358,35 @@ h3{font-size:19px;font-weight:600;line-height:1.3;letter-spacing:-.15px;margin-b
   .stepper li b{font-size:12.5px}
   .panel{padding:28px 22px}
 }
+
+/* ---------- VIDEO/PHOTO HERO: full-bleed media, solid cards anchored bottom ---------- */
+.vhero{position:relative;background:var(--charcoal);min-height:calc(100svh - var(--nav-h));display:flex;padding-bottom:40px}
+.vhero-media{position:absolute;inset:0;overflow:hidden}
+.vhero-media picture,.vhero-media img,.vhero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.vhero-cap{position:absolute;top:20px;right:var(--gut);z-index:2;font-size:11px;letter-spacing:1.6px;text-transform:uppercase;color:var(--ink);background:rgba(250,248,245,.92);padding:6px 10px;border-radius:3px}
+.vhero-inner{position:relative;z-index:2;width:100%;max-width:1800px;margin:0 auto;padding:0 var(--gut);display:flex;align-items:flex-end}
+.vhero-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;width:100%}
+.vcard{background:var(--warm);color:var(--ink);border-radius:6px;padding:32px}
+.vcard-main{grid-column:span 2;border-radius:12px;display:flex;flex-direction:column;align-items:flex-start;gap:24px}
+.vcard-main h1{font-size:clamp(40px,5.4vw,80px);font-weight:900;line-height:1;letter-spacing:-2.5px;max-width:820px}
+.vcard-main h1 span{color:var(--concrete-dk)}
+.vside{display:flex;flex-direction:column;gap:8px}
+.vside .vcard{flex:1}
+.vside p{font-size:16.5px;line-height:1.6;color:var(--body);letter-spacing:-.1px}
+.vcard-cta{display:flex;flex-direction:column;align-items:flex-start;justify-content:space-between;gap:20px}
+.vbadge{display:inline-flex;align-items:center;gap:10px;border:1px solid rgba(26,26,26,.16);border-radius:999px;background:var(--white);padding:4px 12px 4px 4px;text-decoration:none;color:var(--ink);font-size:13px;transition:border-color .2s}
+.vbadge:hover{border-color:var(--ink)}
+.vbadge-l{white-space:nowrap;background:var(--charcoal);color:var(--white);border-radius:999px;padding:4px 10px;font-size:10px;letter-spacing:1.2px;text-transform:uppercase;font-weight:600}
+.vbtn{display:inline-flex;align-items:center;gap:8px;background:#7d6749;color:var(--white);text-decoration:none;border-radius:999px;padding:14px 22px;font-size:15px;font-weight:600;letter-spacing:-.2px;min-height:48px}
+.vbtn:hover{background:var(--bronze-dk)}
+.vbtn-mask{display:block;height:22px;overflow:hidden}
+.vbtn-roll{display:flex;flex-direction:column;transition:transform .3s ease-out}
+.vbtn-roll>span{display:block;line-height:22px}
+.vbtn-arrow{display:block;width:14px;height:14px;overflow:hidden}
+.vbtn-arrow svg{display:block;width:14px;height:14px}
+.vbtn:hover .vbtn-roll,.vbtn:focus-visible .vbtn-roll{transform:translateY(-50%)}
+.js .rise{opacity:0;transform:translateY(32px);transition:opacity .7s ease-out,transform .7s ease-out;transition-delay:var(--d,0ms)}
+.js .rise.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.js .rise{opacity:1;transform:none}.vbtn-roll{transition:none}}
+@media (max-width:991px){.vhero-inner{max-width:760px}.vhero-grid{grid-template-columns:1fr 1fr}.vcard-main{grid-column:1/-1}.vside{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr}}
+@media (max-width:479px){.vcard{padding:24px}.vside{grid-template-columns:1fr}.vhero{padding-bottom:16px}.vhero-inner{padding:0 12px}.vcard-main h1{letter-spacing:-1.2px}.vbadge{font-size:12px}}
