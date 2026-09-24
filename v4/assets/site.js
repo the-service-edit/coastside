@@ -58,13 +58,14 @@
 
   /* ---------- hero gallery: moves sideways as you scroll down ---------- */
   var track=d.querySelector('.shero-track');
+  var phone=w.matchMedia?w.matchMedia('(max-width: 767px)'):{matches:false};
   if(track&&!(w.matchMedia&&w.matchMedia('(prefers-reduced-motion: reduce)').matches)){
     var strip=track.parentNode,dist=0,target=0,cur=0,ticking=false,SPEED=0.55;
     var measure=function(){dist=Math.max(0,track.scrollWidth-strip.clientWidth);update()};
     var update=function(){
       var top=strip.getBoundingClientRect().top+w.scrollY;           // strip position on the page
       var start=Math.max(0,top-w.innerHeight);                        // begins as the strip comes into view
-      target=Math.min(dist,Math.max(0,(w.scrollY-start)*SPEED));
+      target=phone.matches?0:Math.min(dist,Math.max(0,(w.scrollY-start)*SPEED));   // phones: no scroll-linked motion, swipe instead
       if(!ticking){ticking=true;requestAnimationFrame(step)}
     };
     var step=function(){

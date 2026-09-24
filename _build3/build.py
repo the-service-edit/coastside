@@ -17,7 +17,8 @@ OUT = os.path.abspath(os.environ.get('OUT_DIR', os.path.join(HERE, '..', 'v3')))
 SITE_URL = os.environ.get('SITE_URL', 'https://coastside.theserviceedit.com/v3/')
 EXPLICIT = os.environ.get('EXPLICIT_INDEX', '1') == '1'
 CONCEPT = os.environ.get('CONCEPT', '1') == '1'
-HERO = os.environ.get('HERO', 'cards')  # 'cards' (v3) or 'strip' (v4)
+HERO = os.environ.get('HERO', 'cards')
+PALETTE = os.environ.get('PALETTE', '')  # e.g. 'b' loads assets/palette-b.css  # 'cards' (v3) or 'strip' (v4)
 IMG_DIR = os.path.join(OUT, 'img')
 E = html.escape
 
@@ -176,7 +177,7 @@ def page(c, title, desc, body, ptype='page', active=None, schema=(), og='hero', 
 <meta name="theme-color" content="#2A2A2A">
 <link rel="icon" href="{L('img/logo.png')}">
 {('<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&display=swap">') if HERO == 'strip' and ptype == 'home' else ''}
-<link rel="stylesheet" href="{L('assets/site.css')}">
+<link rel="stylesheet" href="{L('assets/site.css')}">{('<link rel="stylesheet" href="' + L('assets/palette-' + PALETTE + '.css') + '">') if PALETTE else ''}
 {ld}
 </head>
 <body data-type="{ptype}" data-slug="{slug}">
@@ -222,9 +223,9 @@ def home():
         hero_html = f'''<section class="shero dark" aria-labelledby="h1">
   <div class="shero-head rise"><span class="eyebrow">Solid plastering, render and architectural coatings</span><h1 id="h1">Finish matters.<br>So does turning up.</h1></div>
   <div class="shero-strip rise" style="--d:120ms">
-    <div class="shero-track">
+    <div class="shero-scroll" tabindex="0" aria-label="Project photos. Swipe to see more."><div class="shero-track">
       {''.join(pic(c, n, a_, '(max-width:479px) 450px, (max-width:991px) 720px, 980px', eager=(i < 3)) for i, (n, a_) in enumerate(MARQUEE))}
-    </div>
+    </div></div>
     <svg class="shero-mask top" viewBox="0 0 1000 60" preserveAspectRatio="none" aria-hidden="true"><path d="M0 0H1000V8Q500 70 0 8Z"/></svg>
     <svg class="shero-mask bottom" viewBox="0 0 1000 60" preserveAspectRatio="none" aria-hidden="true"><path d="M0 60H1000V52Q500 -10 0 52Z"/></svg>
   </div>
