@@ -322,3 +322,13 @@ body[data-type=home] .nav.compact .nav-links .nav-cta{background:#7D6749!importa
 .v7-brands li:nth-child(4),.v7-brands li:nth-child(5){grid-column:span 3}
 .v7-copy .v7-brands-note,.v7-brands-note{font-size:11px;line-height:1.5;letter-spacing:.01em;margin:0 0 22px;opacity:.7}
 @media (max-width:640px){.v7-brands{grid-template-columns:1fr 1fr}.v7-brands li,.v7-brands li:nth-child(4){grid-column:span 1}.v7-brands li:nth-child(5){grid-column:span 2}}
+/* Brands: greyscale, no boxes (overrides the tile styles above) */
+.v7-brands{display:flex!important;flex-wrap:wrap;align-items:center;gap:26px 40px;margin:32px 0 14px}
+.v7-brands li,.v7-brands li:nth-child(n){grid-column:auto!important;background:none;border:0;padding:0;height:auto;display:block}
+.v7-brands img{height:38px;max-height:none;width:auto;max-width:none;filter:grayscale(1) contrast(1.05);mix-blend-mode:multiply;opacity:.72;transition:opacity .3s}
+.v7-brands li:hover img{opacity:1}
+.v7-brands .b-rockcote img{height:20px}
+.v7-brands .b-unitex img{height:28px}
+.v7-brands .b-resene img{height:40px}
+.v7-brands .b-boral img{height:40px}
+@media (max-width:640px){.v7-brands{gap:22px 30px}.v7-brands img{height:32px}.v7-brands .b-rockcote img{height:17px}.v7-brands .b-unitex img{height:24px}.v7-brands .b-resene img,.v7-brands .b-boral img{height:34px}}

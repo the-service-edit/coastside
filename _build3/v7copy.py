@@ -232,7 +232,7 @@ BRAND_LOGOS = [('Dulux AcraTex', 'dulux-acratex.png', 268, 160), ('Rockcote', 'r
 
 def brand_logos(c):
     # Manufacturer logos shown to identify the systems applied, not as endorsement. Names stay in the alt text.
-    items = ''.join(f'<li><img src="{c.L("img/brands/" + f)}" alt="{n}" width="{w}" height="{h}" loading="lazy" decoding="async"></li>'
+    items = ''.join(f'<li class="b-{f.split(".")[0]}"><img src="{c.L("img/brands/" + f)}" alt="{n}" width="{w}" height="{h}" loading="lazy" decoding="async"></li>'
                     for n, f, w, h in BRAND_LOGOS)
     return f'<ul class="v7-brands" aria-label="Systems we apply">{items}</ul><p class="v7-brands-note">Logos are trademarks of their owners and are shown to identify the systems we apply.</p>'
 
