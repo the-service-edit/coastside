@@ -17,6 +17,7 @@ OUT = os.path.abspath(os.environ.get('OUT_DIR', os.path.join(HERE, '..', 'v3')))
 SITE_URL = os.environ.get('SITE_URL', 'https://coastside.theserviceedit.com/v3/')
 EXPLICIT = os.environ.get('EXPLICIT_INDEX', '1') == '1'
 CONCEPT = os.environ.get('CONCEPT', '1') == '1'
+HERO = os.environ.get('HERO', 'cards')  # 'cards' (v3) or 'strip' (v4)
 IMG_DIR = os.path.join(OUT, 'img')
 E = html.escape
 
@@ -167,6 +168,7 @@ def page(c, title, desc, body, ptype='page', active=None, schema=(), og='hero', 
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#2A2A2A">
 <link rel="icon" href="{L('img/logo.png')}">
+{('<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&display=swap">') if HERO == 'strip' and ptype == 'home' else ''}
 <link rel="stylesheet" href="{L('assets/site.css')}">
 {ld}
 </head>
@@ -209,8 +211,32 @@ def home():
     c = Ctx('')
     L = c.L
     featured = [p for p in PROJECTS if p['featured']][:3]
-    body = f'''
-<section class="vhero" aria-label="Introduction">
+    if HERO == 'strip':
+        hero_html = f'''<section class="shero dark" aria-labelledby="h1">
+  <div class="shero-head rise"><span class="eyebrow">Solid plastering, render and architectural coatings</span><h1 id="h1">Finish matters.<br>So does turning up.</h1></div>
+  <div class="shero-strip rise" style="--d:120ms">
+    <div class="shero-row">
+      {pic(c, 'contact', 'Coastside crew rendering a canal-front home from scaffolding', '(max-width:767px) 420px, 52vw', eager=True)}
+      {pic(c, 'hero', 'White rendered coastal home with timber battens, Gold Coast', '(max-width:767px) 420px, 52vw', eager=True)}
+      {pic(c, 'project-4', 'Multi-storey residential building with curved rendered balconies', '(max-width:767px) 420px, 52vw', eager=True)}
+    </div>
+    <svg class="shero-mask top" viewBox="0 0 1000 60" preserveAspectRatio="none" aria-hidden="true"><path d="M0 0H1000V8Q500 70 0 8Z"/></svg>
+    <svg class="shero-mask bottom" viewBox="0 0 1000 60" preserveAspectRatio="none" aria-hidden="true"><path d="M0 60H1000V52Q500 -10 0 52Z"/></svg>
+  </div>
+  <div class="shero-body">
+    <div class="shero-stats">
+      <div class="rise"><strong>25+</strong><span>Years in the trade</span></div><i aria-hidden="true"></i>
+      <div class="rise" style="--d:100ms"><strong>15+</strong><span>Crew on the tools</span></div><i aria-hidden="true"></i>
+      <div class="rise" style="--d:200ms"><strong>3</strong><span>Regions, Byron to Brisbane</span></div><i aria-hidden="true"></i>
+      <div class="rise" style="--d:300ms"><strong>QBCC</strong><span>Licensed {tbc('no.')}</span></div>
+    </div>
+    <div class="shero-text rise"><p>A second-generation plasterer's crew, rendering and plastering for builders, architects and developers from {SITE['area']}. Finished to the specification and on your program.</p>
+      <div class="btns"><a class="btn btn-primary" href="{L('quote/')}" data-track="hero_send_plans">Send plans</a><a class="btn btn-ghost" href="{L('builder-pack/')}">Builder pack</a></div></div>
+  </div>
+</section>
+'''
+    else:
+        hero_html = f'''<section class="vhero" aria-label="Introduction">
   <div class="vhero-media">
     {pic(c, 'hero', 'White rendered coastal home with timber battens, Gold Coast', eager=True)}
     {('<video class="vhero-video" autoplay muted loop playsinline preload="metadata" poster="' + L('img/hero.jpg') + '" aria-hidden="true"><source src="' + L(SITE['hero_video']) + '" type="video/mp4"></video>') if SITE.get('hero_video') else ''}
@@ -231,6 +257,9 @@ def home():
   </div>
 </section>
 <div class="facts"><div><strong>25+ years</strong><span>In the trade</span></div><div><strong>15+ crew</strong><span>On the tools</span></div><div><strong>Byron to Brisbane</strong><span>Service area</span></div><div><strong>QBCC licensed</strong><span>{tbc('licence no.')}</span></div></div>
+'''
+    body = f'''
+{hero_html}
 
 <section class="sec dark" aria-labelledby="bc">
   <div class="wrap">
