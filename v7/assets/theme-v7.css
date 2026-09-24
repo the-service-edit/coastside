@@ -311,3 +311,14 @@ body[data-type=home] .nav.compact .nav-links .nav-cta{background:#7D6749!importa
 /* Stronger centre shade: the hero video is a white house, the type needs the contrast */
 .v7h-shade{background:radial-gradient(ellipse 58% 44% at 50% 52%,rgba(22,21,19,.6) 0%,rgba(22,21,19,.34) 55%,rgba(22,21,19,0) 85%),linear-gradient(180deg,rgba(22,21,19,.38) 0%,rgba(22,21,19,.12) 28%,rgba(22,21,19,.16) 62%,rgba(22,21,19,.6) 100%)}
 @media (min-width:900px){.v7h-bg video{object-position:50% 45%}}
+/* Manufacturer systems (logos) */
+.v7-brands{list-style:none;margin:28px 0 10px;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.v7-brands li{background:#fff;border:1px solid var(--rule);display:flex;align-items:center;justify-content:center;height:96px;padding:18px 22px}
+.v7-brands img{display:block;max-width:100%;max-height:52px;width:auto;height:auto;object-fit:contain}
+.v7-brands-note{font-size:11px;line-height:1.5;color:var(--body);opacity:.75;margin:0 0 20px}
+@media (max-width:640px){.v7-brands{grid-template-columns:1fr 1fr}.v7-brands li{height:80px;padding:14px 16px}.v7-brands img{max-height:44px}}
+.v7-brands{grid-template-columns:repeat(6,1fr)}
+.v7-brands li{grid-column:span 2}
+.v7-brands li:nth-child(4),.v7-brands li:nth-child(5){grid-column:span 3}
+.v7-copy .v7-brands-note,.v7-brands-note{font-size:11px;line-height:1.5;letter-spacing:.01em;margin:0 0 22px;opacity:.7}
+@media (max-width:640px){.v7-brands{grid-template-columns:1fr 1fr}.v7-brands li,.v7-brands li:nth-child(4){grid-column:span 1}.v7-brands li:nth-child(5){grid-column:span 2}}

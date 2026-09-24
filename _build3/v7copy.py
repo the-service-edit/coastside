@@ -226,6 +226,17 @@ def work_grid(c):
 
 
 # ------------------------------------------------------------------ pieces
+BRAND_LOGOS = [('Dulux AcraTex', 'dulux-acratex.png', 268, 160), ('Rockcote', 'rockcote.svg', 398, 60),
+               ('Unitex', 'unitex.svg', 420, 117), ('Resene', 'resene.png', 412, 160), ('Boral', 'boral.png', 175, 160)]
+
+
+def brand_logos(c):
+    # Manufacturer logos shown to identify the systems applied, not as endorsement. Names stay in the alt text.
+    items = ''.join(f'<li><img src="{c.L("img/brands/" + f)}" alt="{n}" width="{w}" height="{h}" loading="lazy" decoding="async"></li>'
+                    for n, f, w, h in BRAND_LOGOS)
+    return f'<ul class="v7-brands" aria-label="Systems we apply">{items}</ul><p class="v7-brands-note">Logos are trademarks of their owners and are shown to identify the systems we apply.</p>'
+
+
 def ps(paras, cls=''):
     return ''.join(f'<p{" class=" + chr(34) + cls + chr(34) if cls else ""}>{p}</p>' for p in paras)
 
@@ -303,7 +314,7 @@ def home():
                     ps(['The performance of a render or coating system depends on more than what you see when the scaffold comes down.',
                         'Substrate preparation, compatibility, application thickness, curing conditions and finishing methodology all affect the result.',
                         'We work with specified systems from established manufacturers and follow the requirements of the nominated system from preparation through to completion.'])
-                    + '<ul class="v7-systems">' + ''.join(f'<li>{s}</li>' for s in SITE['systems']) + '</ul>'
+                    + brand_logos(c)
                     + f'<a class="text-link" href="{L("quote/")}">Discuss your specification{ARROW}</a>', 'sec stone')
     projects = f'''<section class="sec"><div class="wrap">
   <div class="head-row"><div><span class="eyebrow">Selected projects</span><h2>The work is the proof.</h2></div><a class="text-link" href="{L('projects/')}">View projects{ARROW}</a></div>
@@ -333,7 +344,7 @@ def services_hub():
     body += split('Systems', 'The specification comes first.',
                   ps(['The performance of a render or coating system depends on more than what you see when the scaffold comes down.',
                       'We work with specified systems from established manufacturers and follow the requirements of the nominated system from preparation through to completion.'])
-                  + '<ul class="v7-systems">' + ''.join(f'<li>{s}</li>' for s in SITE['systems']) + '</ul>', 'sec stone')
+                  + brand_logos(c), 'sec stone')
     body += cta(c)
     write('services/', page(c, 'Rendering and plastering services | Coastside', 'External rendering, commercial rendering, solid plastering, architectural coatings and Venetian plaster for commercial, multi-residential and architectural projects.', body, 'services', 'services/', [crumb_schema(items)], 'services'))
 
