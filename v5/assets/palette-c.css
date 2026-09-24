@@ -1,0 +1,82 @@
+/* Palette C: Trowel and Stone. Tonal limestone, graphite and lime-putty,
+   with real plaster textures doing the work colour used to do.
+   Loaded after site.css (and theme-v6.css on V6). The --lime token is kept
+   as the accent hook but now holds lime PUTTY, not hi-vis. */
+:root{
+  --ink:#1B1B19;--charcoal:#22221F;--graphite:#2E2E2A;
+  --lime:#E4DDCF;--lime-dk:#D3CAB8;          /* lime putty: used on dark only */
+  --bronze:#1B1B19;--bronze-dk:#1B1B19;--bronze-lt:#E4DDCF;
+  --stone:#DCD8D0;--sand:#CFCAC1;--concrete:#8C8880;--concrete-dk:#5F5C56;
+  --cream:#E9E5DD;--warm:#EFECE6;--white:#fff;--body:#3D3B37;
+  --paper:#EFECE6;--paper-2:#E3DFD7;
+  --tx-light:url(../img/tx-limestone.webp);
+  --tx-dark:url(../img/tx-marmorino.webp);
+  --tx-sand:url(../img/tx-sand.webp);
+  --tx-stone:url(../img/tx-stone.webp);
+}
+::selection{background:var(--ink);color:var(--lime)}
+
+/* ---------- Textured surfaces ----------
+   Body: fine sand render, tiled (grain has no seams). Sections: one large
+   trowelled/polished sheet each, sized to cover, so no visible repeat. */
+body,.oh-body{background:var(--warm) var(--tx-sand) 0 0/1312px auto repeat}
+.dark,.ink,.cta,.footer,.oh-check,.oh-contact,.oh-window,.nav,.mbar{
+  background-color:var(--charcoal)!important;background-image:var(--tx-dark)!important;
+  background-size:cover!important;background-position:center!important;background-repeat:no-repeat!important}
+.stone,.section.alt,.band,.oh-work,.oh-tools{
+  background-color:var(--paper-2)!important;background-image:var(--tx-stone)!important;
+  background-size:cover!important;background-position:center!important;background-repeat:no-repeat!important}
+.oh-intro,.oh-services,.oh-steve,.oh-builders,.page-head,.phead{
+  background:var(--paper) var(--tx-light) center/cover no-repeat}
+.oh-systems li{background:rgba(255,255,255,.5)}
+.oh-systems .oh-more{background:rgba(27,27,25,.05)}
+
+/* ---------- Buttons: ink on light, putty on dark ---------- */
+.btn-primary,.nav-cta,.mbar a,.vbtn,.skip,.oh-pill{background:var(--ink)!important;color:var(--lime)!important;font-weight:600}
+.btn-primary:hover,.nav-cta:hover,.mbar a:hover,.vbtn:hover,.oh-pill:hover{background:#000!important}
+.dark .btn-primary,.cta .btn-primary,.check .btn-primary,.shero .btn-primary,.nav .nav-cta,.nav-links .nav-cta,.oh-contact .oh-pill,.oh-check .oh-pill{background:var(--lime)!important;color:var(--ink)!important}
+.dark .btn-primary:hover,.cta .btn-primary:hover,.shero .btn-primary:hover,.nav .nav-cta:hover,.nav-links .nav-cta:hover{background:#fff!important}
+.btn-ghost{border-color:rgba(255,255,255,.45)}
+.btn-ghost:hover{border-color:var(--lime);color:var(--lime)}
+
+/* ---------- Markers: hairlines, not highlighter ---------- */
+.nav-links a:hover,.nav-links a[aria-current=page]{border-bottom-color:var(--lime)}
+.eyebrow{display:flex;align-items:center;gap:12px}
+.eyebrow::before{content:'';width:22px;height:1px;background:currentColor;flex:none;opacity:.7}
+.shero-head .eyebrow{justify-content:center}
+.dark .steps li::before,.panel ol li::before{color:var(--lime)}
+.dark .ticks li::before{background:var(--lime)}
+.definition{border-left:1px solid var(--ink);box-shadow:none}
+.text-link{color:var(--ink);border-bottom:1px solid var(--ink);padding-bottom:3px}
+.text-link:hover{color:var(--concrete-dk);border-bottom-color:var(--concrete-dk);background:none}
+.dark .text-link,.check .text-link{color:var(--white);border-bottom-color:var(--lime)}
+.dark .text-link:hover{background:none;color:var(--lime)}
+.card:hover h3{color:var(--ink);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:5px}
+.card .more,.svc-row .go{color:var(--ink);border-bottom:1px solid var(--ink);align-self:flex-start;padding-bottom:2px}
+.svc-row:hover{box-shadow:inset 2px 0 0 var(--ink)}
+.stepper li.on{border-top-color:var(--ink);box-shadow:none}
+.checks input{accent-color:var(--ink)}
+.choice input:checked+span{background:var(--ink);border-color:var(--ink);color:var(--lime)}
+:focus-visible{outline:2px solid var(--ink);outline-offset:3px;box-shadow:none}
+.dark :focus-visible,.oh-window :focus-visible,.oh-chapter.dark :focus-visible{outline-color:var(--lime)}
+
+/* ---------- V6 specifics ---------- */
+.oh-rail a[aria-current=true]{background:var(--lime);border-color:var(--lime)}
+.oh-header a:hover,.oh-proj:hover strong{text-decoration-color:currentColor;text-decoration-thickness:1px}
+.oh-acc details p a,.oh-also a{text-decoration-color:var(--concrete);text-decoration-thickness:1px}
+.oh-links a:hover{background:none;color:var(--concrete-dk)}
+.oh-list span{color:var(--lime);opacity:.75}
+.oh-contact{border-top:1px solid #ffffff22}
+.oh-contact h2{color:var(--lime)}
+.oh-big span,.oh-small a{color:var(--lime)}
+
+/* ---------- Chips for unconfirmed facts ---------- */
+.tbc{border-color:#8C8880;color:#4a4740;background:rgba(27,27,25,.05)}
+.dark .tbc,.panel .tbc,.footer .tbc,.oh-check .tbc,.oh-contact .tbc{border-color:#E4DDCF99;color:var(--lime);background:rgba(228,221,207,.08)}
+
+/* ---------- Hero bits ---------- */
+.shero-stats strong{color:var(--white)}
+.shero-stats i{background:var(--lime);opacity:.4}
+.vbadge-l{background:var(--ink);color:var(--lime)}
+.vcard-main h1 span{color:var(--concrete-dk)}
+
