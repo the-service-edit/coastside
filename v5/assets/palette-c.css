@@ -1,3 +1,4 @@
+/* V5: flat version, textures switched off (tx vars = none). */
 /* Palette C: Trowel and Stone. Tonal limestone, graphite and lime-putty,
    with real plaster textures doing the work colour used to do.
    Loaded after site.css (and theme-v6.css on V6). The --lime token is kept
@@ -9,10 +10,10 @@
   --stone:#DCD8D0;--sand:#CFCAC1;--concrete:#8C8880;--concrete-dk:#5F5C56;
   --cream:#E9E5DD;--warm:#EFECE6;--white:#fff;--body:#3D3B37;
   --paper:#EFECE6;--paper-2:#E3DFD7;
-  --tx-light:url(../img/tx-limestone.webp);
-  --tx-dark:url(../img/tx-marmorino.webp);
-  --tx-sand:url(../img/tx-sand.webp);
-  --tx-stone:url(../img/tx-stone.webp);
+  --tx-light:none;
+  --tx-dark:none;
+  --tx-sand:none;
+  --tx-stone:none;
 }
 ::selection{background:var(--ink);color:var(--lime)}
 
