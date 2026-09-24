@@ -169,7 +169,7 @@ def page(c, title, desc, body, ptype='page', active=None, schema=(), og='hero', 
     loc_links = ''.join(f'<li><a href="{L(l["slug"] + "/")}">{l["name"]}</a></li>' for l in PUB_LOCATIONS)
     if index and c.path not in ('404.html',):
         SITEMAP.append(c.path)
-    return f'''<!DOCTYPE html>
+    doc = f'''<!DOCTYPE html>
 <html lang="en-AU" class="no-js">
 <head>
 <meta charset="utf-8">
@@ -208,6 +208,9 @@ def page(c, title, desc, body, ptype='page', active=None, schema=(), og='hero', 
 </body>
 </html>
 '''
+    if THEME == 'v7' and 'FOOTER_V7' in globals():
+        doc = re.sub(r'<footer class="footer dark">.*?</footer>', lambda m: FOOTER_V7(L), doc, count=1, flags=re.S)
+    return doc
 
 
 def write(path, doc):
@@ -832,6 +835,9 @@ def not_found():
 
 
 def main():
+    if THEME == 'v7':
+        import v7copy
+        v7copy.install(globals())
     home(); services_hub()
     for s in PUB_SERVICES:
         service_page(s)
