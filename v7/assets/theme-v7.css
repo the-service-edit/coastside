@@ -332,3 +332,10 @@ body[data-type=home] .nav.compact .nav-links .nav-cta{background:#7D6749!importa
 .v7-brands .b-resene img{height:40px}
 .v7-brands .b-boral img{height:40px}
 @media (max-width:640px){.v7-brands{gap:22px 30px}.v7-brands img{height:32px}.v7-brands .b-rockcote img{height:17px}.v7-brands .b-unitex img{height:24px}.v7-brands .b-resene img,.v7-brands .b-boral img{height:34px}}
+/* Align card links: pin "View case study" to the bottom of each card so they line up across a row */
+.card>p{margin-bottom:14px}
+.card>.more{margin-top:auto}
+/* Get started CTA: site photo underlay, darkened left-to-right so the copy stays readable */
+.cta.v7-final{background-color:var(--charcoal);background-image:linear-gradient(90deg,rgba(28,28,28,.94) 0%,rgba(28,28,28,.86) 42%,rgba(28,28,28,.62) 100%),url(../img/site-overhead-1600.webp);background-size:cover;background-position:center 40%;background-repeat:no-repeat}
+@media (min-width:1700px){.cta.v7-final{background-image:linear-gradient(90deg,rgba(28,28,28,.94) 0%,rgba(28,28,28,.86) 42%,rgba(28,28,28,.62) 100%),url(../img/site-overhead-2048.webp)}}
+@media (max-width:700px){.cta.v7-final{background-image:linear-gradient(180deg,rgba(28,28,28,.9),rgba(28,28,28,.84)),url(../img/site-overhead-960.webp)}}
