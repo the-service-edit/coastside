@@ -21,6 +21,8 @@ HERO = os.environ.get('HERO', 'cards')
 PALETTE = os.environ.get('PALETTE', '')
 THEME = os.environ.get('THEME', '')  # 'v6' = split 'open house' home + DM Sans / Plex Mono type  # e.g. 'b' loads assets/palette-b.css  # 'cards' (v3) or 'strip' (v4)
 IMG_DIR = os.path.join(OUT, 'img')
+# V7 enquiry mailer (Google Apps Script web app URL). Empty = forms post to Web3Forms only.
+ENQUIRY_ENDPOINT = os.environ.get('ENQUIRY_ENDPOINT', open(os.path.join(HERE, 'enquiry_endpoint.txt')).read().strip() if os.path.exists(os.path.join(HERE, 'enquiry_endpoint.txt')) else '')
 E = html.escape
 
 PUB_SERVICES = [s for s in SERVICES if not s.get('conditional')]
@@ -639,7 +641,8 @@ def project_page(p):
 
 def form_head(subject, lead_type, success='', nxt='', event='form_submitted'):
     return (f'<form class="form" action="https://api.web3forms.com/submit" method="post" data-ajax novalidate data-fallback="{SITE["email"]}" '
-            f'data-success="{E(success)}" {"data-next=" + chr(34) + nxt + chr(34) if nxt else ""} data-event="{event}">'
+            f'data-success="{E(success)}" {"data-next=" + chr(34) + nxt + chr(34) if nxt else ""} data-event="{event}"'
+            f'{(" data-endpoint=" + chr(34) + ENQUIRY_ENDPOINT + chr(34)) if (THEME == "v7" and ENQUIRY_ENDPOINT) else ""}>'
             f'<input type="hidden" name="access_key" value="{SITE["web3forms_key"]}"><input type="hidden" name="subject" value="{E(subject)}">'
             f'<input type="hidden" name="from_name" value="Coastside website"><input type="hidden" name="lead_type" value="{lead_type}">'
             f'<div class="hp" aria-hidden="true"><input type="checkbox" name="botcheck" tabindex="-1" autocomplete="off"></div>')

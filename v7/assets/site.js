@@ -57,11 +57,11 @@
   if(hv&&w.matchMedia&&w.matchMedia('(prefers-reduced-motion: reduce)').matches){hv.removeAttribute('autoplay');hv.pause()}
 
   /* ---------- hero gallery: moves sideways as you scroll down ---------- */
-  var track=d.querySelector('.shero-track');
+  var stripTrack=d.querySelector('.shero-track');
   var phone=w.matchMedia?w.matchMedia('(max-width: 767px)'):{matches:false};
-  if(track&&!(w.matchMedia&&w.matchMedia('(prefers-reduced-motion: reduce)').matches)){
-    var strip=track.parentNode,dist=0,target=0,cur=0,ticking=false,SPEED=0.55;
-    var measure=function(){dist=Math.max(0,track.scrollWidth-strip.clientWidth);update()};
+  if(stripTrack&&!(w.matchMedia&&w.matchMedia('(prefers-reduced-motion: reduce)').matches)){
+    var strip=stripTrack.parentNode,dist=0,target=0,cur=0,ticking=false,SPEED=0.55;
+    var measure=function(){dist=Math.max(0,stripTrack.scrollWidth-strip.clientWidth);update()};
     var update=function(){
       var top=strip.getBoundingClientRect().top+w.scrollY;           // strip position on the page
       var start=Math.max(0,top-w.innerHeight);                        // begins as the strip comes into view
@@ -71,7 +71,7 @@
     var step=function(){
       cur+=(target-cur)*0.12;                                         // eased follow, no jumps
       if(Math.abs(target-cur)<0.3)cur=target;
-      track.style.transform='translate3d('+(-cur).toFixed(1)+'px,0,0)';
+      stripTrack.style.transform='translate3d('+(-cur).toFixed(1)+'px,0,0)';
       if(cur!==target)requestAnimationFrame(step);else ticking=false;
     };
     w.addEventListener('scroll',update,{passive:true});
@@ -162,6 +162,7 @@
     var data={};
     new FormData(form).forEach(function(v,k){if(v instanceof File)return;if(data[k]){data[k]+=', '+v}else data[k]=v});
     form.querySelectorAll('[data-show-if]:not(.shown) [name]').forEach(function(el){delete data[el.name]});
+    form.querySelectorAll('select[name]').forEach(function(el){if(data[el.name]&&el.selectedIndex>-1)data[el.name]=el.options[el.selectedIndex].text.trim()});
     var files=form.querySelector('input[type=file]');
     if(files&&files.files.length)data.documents=[].map.call(files.files,function(f){return f.name+' ('+Math.round(f.size/1024)+' KB)'}).join(', ');
     Object.assign(data,attribution());
@@ -171,9 +172,14 @@
   function send(form,data){
     var st=form.querySelector('.status'),btn=form.querySelector('[type=submit]');
     btn.disabled=true;var lbl=btn.textContent;btn.textContent='Sending';
-    return fetch(form.action,{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify(data)})
-      .then(function(r){return r.json()}).then(function(r){
-        if(!r.success)throw 0;
+    // Primary: Coastside enquiry mailer (PDF summary + auto-reply). text/plain keeps it a simple CORS request.
+    // Fallback: Web3Forms, so an enquiry is never lost if the mailer is down.
+    var viaW3=function(){return fetch(form.action,{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify(data)}).then(function(r){return r.json()}).then(function(r){if(!r.success)throw 0;return r})};
+    var ep=form.dataset.endpoint;
+    var primary=ep?fetch(ep,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(data),redirect:'follow'}).then(function(r){return r.json()}).then(function(r){if(!r.success)throw 0;return r}).catch(viaW3):viaW3();
+    return primary
+      .then(function(r){
+        if(r.ref)set('sessionStorage','cs_quote_ref',r.ref);
         track(form.dataset.event||'form_submitted',{lead_type:data.lead_type||''});
         if(form.dataset.next){location.href=form.dataset.next;return}
         form.querySelectorAll('.field,.row2,.btns,fieldset,.step-nav').forEach(function(el){el.style.display='none'});
@@ -225,7 +231,8 @@
       var scope=steps.length?steps[cur]:form;
       if(!validate(scope))return;
       var hp=form.querySelector('.hp input');
-      if((hp&&hp.checked)||Date.now()-started<3000){return}
+      if(hp&&hp.checked){return}
+      if(Date.now()-started<3000){setTimeout(function(){send(form,collect(form))},3000-(Date.now()-started));return}
       send(form,collect(form));
     });
   });

@@ -57,11 +57,11 @@
   if(hv&&w.matchMedia&&w.matchMedia('(prefers-reduced-motion: reduce)').matches){hv.removeAttribute('autoplay');hv.pause()}
 
   /* ---------- hero gallery: moves sideways as you scroll down ---------- */
-  var track=d.querySelector('.shero-track');
+  var stripTrack=d.querySelector('.shero-track');
   var phone=w.matchMedia?w.matchMedia('(max-width: 767px)'):{matches:false};
-  if(track&&!(w.matchMedia&&w.matchMedia('(prefers-reduced-motion: reduce)').matches)){
-    var strip=track.parentNode,dist=0,target=0,cur=0,ticking=false,SPEED=0.55;
-    var measure=function(){dist=Math.max(0,track.scrollWidth-strip.clientWidth);update()};
+  if(stripTrack&&!(w.matchMedia&&w.matchMedia('(prefers-reduced-motion: reduce)').matches)){
+    var strip=stripTrack.parentNode,dist=0,target=0,cur=0,ticking=false,SPEED=0.55;
+    var measure=function(){dist=Math.max(0,stripTrack.scrollWidth-strip.clientWidth);update()};
     var update=function(){
       var top=strip.getBoundingClientRect().top+w.scrollY;           // strip position on the page
       var start=Math.max(0,top-w.innerHeight);                        // begins as the strip comes into view
@@ -71,7 +71,7 @@
     var step=function(){
       cur+=(target-cur)*0.12;                                         // eased follow, no jumps
       if(Math.abs(target-cur)<0.3)cur=target;
-      track.style.transform='translate3d('+(-cur).toFixed(1)+'px,0,0)';
+      stripTrack.style.transform='translate3d('+(-cur).toFixed(1)+'px,0,0)';
       if(cur!==target)requestAnimationFrame(step);else ticking=false;
     };
     w.addEventListener('scroll',update,{passive:true});
