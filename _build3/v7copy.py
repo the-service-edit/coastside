@@ -225,6 +225,30 @@ def work_grid(c):
 </div></section>'''
 
 
+# Instagram band (home). Six saved posts from @coast_side_plastering, same as the old one-page site. Static tiles until the Behold feed is connected.
+IG_POSTS = [
+    ('reel/DYB-mexTDvU', 'ig-1', 'Coastal home at Brakes Crescent, Miami, Gold Coast, rendered by Coastside', True),
+    ('reel/DbHRJIUTJUs', 'ig-2', 'Waterfront luxury home on the Gold Coast', True),
+    ('p/DYB5wBUk21X', 'ig-3', 'Finished rendered coastal home, Gold Coast', False),
+    ('p/DaeHVZozc-N', 'ig-4', 'Coastside crew walking a finished rendered corridor', False),
+    ('p/DaShOf0zg-y', 'ig-5', 'Coastside crew rendering on a Gold Coast construction site', False),
+    ('p/DZ3-sHqk29D', 'ig-6', 'Coastside crew rendering from scaffolding', False),
+]
+
+
+def instagram_band(c):
+    base = SITE['instagram']
+    handle = '@' + base.rstrip('/').rsplit('/', 1)[-1]
+    tiles = ''.join(
+        f'<li><a class="v7-ig-tile" href="{base}{path}/" target="_blank" rel="noopener" data-track="instagram_post" aria-label="{"Watch the reel" if reel else "View the post"} on Instagram: {E(alt)}">'
+        f'{pic(c, name, alt, "(max-width:700px) 33vw, (max-width:1400px) 17vw, 230px")}{"<span class=" + chr(34) + "v7-ig-reel" + chr(34) + " aria-hidden=" + chr(34) + "true" + chr(34) + "></span>" if reel else ""}</a></li>'
+        for path, name, alt, reel in IG_POSTS)
+    return f'''<section class="sec cream v7-ig-sec" aria-labelledby="ig"><div class="wrap">
+  <div class="head-row"><div><span class="eyebrow">On Instagram</span><h2 id="ig">Follow the work.</h2></div><a class="text-link" href="{base}" target="_blank" rel="noopener" data-track="instagram_profile">{handle}{ARROW}</a></div>
+  <ul class="v7-ig">{tiles}</ul>
+</div></section>'''
+
+
 # ------------------------------------------------------------------ pieces
 BRAND_LOGOS = [('Dulux AcraTex', 'dulux-acratex.png', 268, 160), ('Rockcote', 'rockcote.svg', 398, 60),
                ('Unitex', 'unitex.svg', 420, 117), ('Resene', 'resene.png', 412, 160), ('Boral', 'boral.png', 175, 160)]
@@ -325,7 +349,7 @@ def home():
   <div class="v7-copy"><p class="v7-pull">Clear scope before anyone starts.</p><p>The easiest problems to solve on a construction project are the ones identified before work begins. Our process is designed to establish scope, specification, access, sequencing and program requirements before mobilisation.</p></div></div>
   {process_ol()}
 </div></section>'''
-    body = hero + bigger + work_band(c) + capability + services + work_grid(c) + systems + projects + process + cta(c)
+    body = hero + bigger + work_band(c) + capability + services + work_grid(c) + systems + projects + instagram_band(c) + process + cta(c)
     write('', page(c, 'Coastside Solid Plastering | Commercial rendering and solid plastering, Gold Coast',
                    'Commercial rendering, external rendering, solid plastering and architectural finishes across South East Queensland and Northern NSW. 15+ crew, pumped render, specified systems.',
                    body, 'home'))
@@ -571,6 +595,7 @@ def contact():
 <tr><th scope="row">Project enquiries</th><td><a href="{L('quote/')}">Send the package</a></td></tr>
 <tr><th scope="row">Email</th><td><a href="mailto:{SITE['email']}">{SITE['email']}</a></td></tr>
 <tr><th scope="row">Phone</th><td><a href="tel:{SITE['phone_tel']}">{SITE['phone']}</a></td></tr>
+<tr><th scope="row">Instagram</th><td><a href="{SITE['instagram']}" target="_blank" rel="noopener">@coast_side_plastering</a></td></tr>
 <tr><th scope="row">Based</th><td>Gold Coast, Queensland</td></tr>
 <tr><th scope="row">ABN</th><td>{SITE['abn']}</td></tr></tbody></table>
 <aside class="panel"><h2>Procurement?</h2><p>Licence, insurance and capability documents in one place.</p><a class="btn btn-primary" href="{L('builder-pack/')}">Working with Coastside</a></aside></div></section>'''
@@ -588,7 +613,7 @@ def footer(L):
     <div><h2>Coastside Solid Plastering</h2><ul>{svc}</ul></div>
     <div><h2>Regions</h2><ul><li><a href="{L('gold-coast/')}">Gold Coast</a></li><li><a href="{L('service-areas/')}">South East Queensland</a></li><li><a href="{L('service-areas/')}">Northern New South Wales</a></li></ul></div>
     <div><h2>Compliance</h2><ul><li>QBCC Licensed {tbc('number')}</li><li>Insured</li><li><a href="{L('builder-pack/')}">Working with Coastside</a></li><li><a href="{L('builder-pack/coastside-capability-statement.pdf')}">Capability statement (PDF)</a></li></ul></div>
-    <div><h2>Contact</h2><ul><li><a href="{L('quote/')}">Project enquiries{ARROW}</a></li><li><a href="mailto:{SITE['email']}">{SITE['email']}</a></li><li><a href="tel:{SITE['phone_tel']}">{SITE['phone']}</a></li></ul><p style="margin-top:14px">ABN {SITE['abn']}</p></div>
+    <div><h2>Contact</h2><ul><li><a href="{L('quote/')}">Project enquiries{ARROW}</a></li><li><a href="mailto:{SITE['email']}">{SITE['email']}</a></li><li><a href="tel:{SITE['phone_tel']}">{SITE['phone']}</a></li><li><a href="{SITE['instagram']}" target="_blank" rel="noopener">Instagram</a></li></ul><p style="margin-top:14px">ABN {SITE['abn']}</p></div>
   </div>
   <div class="fbase"><span>&copy; 2026 {SITE['legal']}. <a href="{L('privacy/')}">Privacy</a></span><span>Site by <a href="https://theserviceedit.com" rel="noopener" target="_blank">The Service Edit</a></span></div>
 </footer>'''
