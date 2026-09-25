@@ -179,9 +179,9 @@ def install(g):
 V7_SERVICE_IMG = {
     'external-rendering': 'rear-pool',
     'commercial-rendering': 'scaffold-canal',
-    'solid-plastering': 'side-elevation',
+    'solid-plastering': 'feature-wall',
     'architectural-coatings': 'curved-front',
-    'venetian-plaster': 'entry-stone',
+    'venetian-plaster': 'bathroom-plaster',
     'render-repairs': 'pool-overhead',
 }
 V7_LOCATION_IMG = {'gold-coast': 'apartments-skyline', 'northern-rivers': 'pool-overhead'}
@@ -194,6 +194,14 @@ V7_PROJECTS = {
                                  'summary': 'Multi-storey apartment buildings in construction, with the Gold Coast skyline behind.',
                                  'alt': 'Multi-storey apartment building under scaffold with the Gold Coast skyline behind'},
     # Edited photography, 25 Sep 2026
+    'architectural-bathroom': {'img': 'bathroom-plaster', 'gallery': [], 'featured': False,
+                               'summary': 'Polished plaster walls and a plastered ledge behind a freestanding bath.',
+                               'alt': 'Bathroom with polished plaster walls, a plastered ledge and a freestanding bath'},
+    'hospitality-feature-wall': {'img': 'feature-wall', 'gallery': [], 'featured': False,
+                                 'summary': 'Textured plaster feature wall with a floating plastered bench and a recessed niche.',
+                                 'alt': 'Textured plaster feature wall with a floating plastered bench, a recessed niche and white stools'},
+    'rendered-landscape-walls': {'img': 'landscape-walls', 'gallery': [], 'featured': False,
+                                 'alt': 'Rendered garden edging wall around stepping pavers'},
     'commercial-entry': {'img': 'commercial-entry', 'gallery': [], 'featured': True,
                          'summary': 'Curved rendered entry arches, a textured feature wall and a rendered bench at a Gold Coast multi-storey building.',
                          'alt': 'Curved rendered entry arches, textured feature wall and lit rendered bench at a Gold Coast multi-storey building'},
@@ -228,7 +236,11 @@ def work_band(c):
 
 def work_grid(c):
     L = c.L
-    figs = ''.join(f'<figure>{pic(c, n, a, "(max-width:700px) 50vw, (max-width:1400px) 33vw, 460px")}</figure>' for n, a in WORK)
+    def sz(n):
+        w, h = dims(n)
+        k = max(1.0, (w / h) / 0.8)
+        return f"(max-width:700px) {round(50 * k)}vw, (max-width:1400px) {round(33 * k)}vw, {round(460 * k)}px"
+    figs = ''.join(f'<figure>{pic(c, n, a, sz(n))}</figure>' for n, a in WORK)
     return f'''<section class="sec v7-work-sec"><div class="wrap">
   <div class="head-row"><div><span class="eyebrow">Recent work</span><h2>On site and finished.</h2></div><a class="text-link" href="{L('projects/')}">View projects{ARROW}</a></div>
   <div class="v7-work">{figs}</div>
@@ -300,10 +312,15 @@ def process_ol():
         f'<li><span class="n">{i:02d}</span><h3>{t}</h3>{ps(p)}</li>' for i, (t, p) in enumerate(PROCESS, 1)) + '</ol>'
 
 
-def page_hero(c, items, eyebrow, h1, lead_paras=(), btn=None):
+def page_hero(c, items, eyebrow, h1, lead_paras=(), btn=None, photo=None):
     L = c.L
     b = f'<div class="btns"><a class="btn btn-primary" href="{btn[1]}">{btn[0]}{ARROW}</a></div>' if btn else ''
-    return f'''<section class="hero dark"><div class="wrap">{crumbs(c, items)}<span class="eyebrow">{eyebrow}</span><h1>{h1}</h1>
+    bg = ''
+    if photo:
+        ws = [w for w in img_widths(photo) if w >= 960]
+        bg = (f'<picture class="hero-bg" aria-hidden="true"><source type="image/webp" srcset="{", ".join(L(f"img/{photo}-{w}.webp") + f" {w}w" for w in ws)}" sizes="100vw">'
+              f'<img src="{L(f"img/{photo}.jpg")}" alt="" fetchpriority="high"></picture>')
+    return f'''<section class="hero dark{" hero-photo" if photo else ""}">{bg}<div class="wrap">{crumbs(c, items)}<span class="eyebrow">{eyebrow}</span><h1>{h1}</h1>
   <div class="hero-row"><div class="lead v7-lead">{ps(lead_paras)}</div>{b}</div></div></section>'''
 
 
@@ -417,7 +434,7 @@ def projects_hub():
     used_svc = {x: SVC[x]['name'] for x in dict.fromkeys(y for p in PROJECTS for y in p['services'])}
     body = page_hero(c, items, 'Selected projects', 'The work is the proof.',
                      ['Commercial. Multi-residential. Architectural residential.',
-                      'A selection of rendering, solid plastering and specialist finish projects delivered by Coastside across Queensland and Northern New South Wales.'])
+                      'A selection of rendering, solid plastering and specialist finish projects delivered by Coastside across Queensland and Northern New South Wales.'], photo='bathroom-plaster')
     body += f'''<section class="sec"><div class="wrap">
   <form class="filterbar" action="" method="get" aria-label="Filter projects" role="search">
     <label>Sector<select name="sector"><option value="">All sectors</option>{opts(SECTORS)}</select></label>

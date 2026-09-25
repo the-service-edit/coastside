@@ -379,3 +379,6 @@ img[src*="/crew-spraying"]{object-position:50% 40%}
 .hero-photo .hero-bg img{object-fit:cover;object-position:50% 52%}
 .hero-photo::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,rgba(22,21,19,.86) 0%,rgba(22,21,19,.7) 42%,rgba(22,21,19,.3) 75%,rgba(22,21,19,.15) 100%),linear-gradient(180deg,rgba(22,21,19,.45) 0%,rgba(22,21,19,0) 30%)}
 @media (max-width:700px){.hero-photo .hero-bg img{object-position:62% 50%}.hero-photo::before{background:rgba(22,21,19,.68)}}
+/* 04 and 06 (25 Sep 2026) */
+.band img[src*="/bathroom-plaster"]{object-position:50% 58%}
+.band img[src*="/feature-wall"]{object-position:50% 48%}
