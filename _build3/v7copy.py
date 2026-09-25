@@ -178,7 +178,7 @@ def install(g):
 
 V7_SERVICE_IMG = {
     'external-rendering': 'rear-pool',
-    'commercial-rendering': 'site-overhead',
+    'commercial-rendering': 'scaffold-canal',
     'solid-plastering': 'side-elevation',
     'architectural-coatings': 'curved-front',
     'venetian-plaster': 'entry-stone',
@@ -189,12 +189,22 @@ V7_LOCATION_IMG = {'gold-coast': 'apartments-skyline', 'northern-rivers': 'pool-
 V7_PROJECTS = {
     'brakes-crescent-miami': {'img': 'curved-front', 'gallery': ['curved-front', 'side-elevation'], 'featured': True,
                               'alt': 'Curved rendered upper level with timber battens and a glass balcony, Brakes Crescent, Miami'},
-    'coastal-residence': {'img': 'street-front', 'gallery': ['street-front', 'entry-stone'], 'featured': True},
+    'coastal-residence': {'img': 'street-front', 'gallery': ['street-front', 'entry-stone'], 'featured': False},
     'multi-storey-residential': {'img': 'apartments-skyline', 'gallery': ['apartments-skyline', 'site-overhead'], 'featured': True,
                                  'summary': 'Multi-storey apartment buildings in construction, with the Gold Coast skyline behind.',
                                  'alt': 'Multi-storey apartment building under scaffold with the Gold Coast skyline behind'},
+    # Edited photography, 25 Sep 2026
+    'commercial-entry': {'img': 'commercial-entry', 'gallery': [], 'featured': True,
+                         'summary': 'Curved rendered entry arches, a textured feature wall and a rendered bench at a Gold Coast multi-storey building.',
+                         'alt': 'Curved rendered entry arches, textured feature wall and lit rendered bench at a Gold Coast multi-storey building'},
 }
 V7_NEW_PROJECTS = {
+    'curved-balcony-residential': {'title': 'Curved-balcony residential', 'location': 'gold-coast',
+                                   'services': ['external-rendering', 'architectural-coatings'],
+                                   'sector': 'multi', 'build': 'new', 'featured': False,
+                                   'img': 'curved-balconies', 'gallery': [],
+                                   'summary': 'Three-storey residential building with curved rendered balcony bands, vertical battens and a stone-clad corner.',
+                                   'alt': 'Three-storey residential building with curved rendered balcony bands and a stone-clad corner'},
     'contemporary-residence': {'title': 'Contemporary residence', 'location': 'gold-coast', 'services': ['external-rendering'],
                                'sector': 'luxury', 'build': 'new', 'featured': False,
                                'img': 'drone-front', 'gallery': ['drone-front', 'rear-pool', 'pool-overhead'],
@@ -203,12 +213,12 @@ V7_NEW_PROJECTS = {
 }
 WORK_BAND = ('site-overhead', 'Overhead view of a multi-storey construction site under way')
 WORK = [
-    ('drone-front', 'Aerial view of a rendered two-storey home with a glass balcony and timber battens'),
-    ('curved-front', 'Curved rendered upper level with timber battens and a glass balcony'),
-    ('pool-overhead', 'Overhead view of a rendered home, pool and garden'),
-    ('entry-stone', 'Rendered curved slab over a stone-clad entry and timber door'),
+    ('crew-spraying', 'Two Coastside plasterers spraying render onto a block wall from scaffold'),
+    ('commercial-entry', 'Curved rendered entry arches and a lit rendered bench at a Gold Coast multi-storey building'),
+    ('scaffold-canal', 'Coastside crew rendering a canal-front building from scaffold, seen from the air'),
+    ('curved-balconies', 'Three-storey building with curved rendered balcony bands and a stone-clad corner'),
     ('apartments-skyline', 'Multi-storey apartment building under scaffold with the Gold Coast skyline behind'),
-    ('side-elevation', 'Rendered side elevation of a two-storey home with a stone base'),
+    ('curved-front', 'Curved rendered upper level with timber battens and a glass balcony'),
 ]
 
 
@@ -443,7 +453,7 @@ def project_page(p):
   <h2>Delivery</h2><p>{tbc('Scale of the package, crew requirements, access constraints, sequencing, program or technical challenges.')}</p>
   <h2>The finish</h2><p>{p['systems']} {tbc('What was required to achieve the completed result.')}</p>
 </div><aside class="panel sticky"><h2>Have a similar project?</h2><p>Send through the available documentation and we’ll take a look.</p><a class="btn btn-primary" href="{L('quote/')}" data-track="project_send_plans" data-label="{p['slug']}">Send us the package{ARROW}</a></aside></div></section>
-<section class="sec-tight"><div class="wrap"><div class="gallery">{gal}</div></div></section>
+{('<section class="sec-tight"><div class="wrap"><div class="gallery">' + gal + '</div></div></section>') if gal else ''}
 {cta(c)}'''
     schema = [crumb_schema(items)]
     write(c.path, page(c, f"{p['title']} | Coastside project", f"{p['summary']} Delivered by Coastside Solid Plastering.", body, 'project', 'projects/', schema, p['img'], p['slug']))
@@ -466,7 +476,7 @@ def about():
                       'An unusual substrate. A difficult junction. A tight construction sequence. A large elevation. A specified finish that needs to remain consistent across hundreds of square metres.',
                       'That’s where years on the tools become useful.',
                       'Not as a number on a website, but in the decisions made before and during the work.']), 'sec cream')
-    body += f'''<section class="sec"><div class="wrap grid-2"><div>{pic(c, 'entry-stone', 'Rendered curved slab over a stone-clad entry and timber door', '(max-width:1100px) 100vw, 560px')}</div>
+    body += f'''<section class="sec"><div class="wrap grid-2"><div>{pic(c, 'crew-spraying', 'Two Coastside plasterers spraying render onto a block wall from scaffold', '(max-width:1100px) 100vw, 560px')}</div>
 <div class="v7-copy"><span class="eyebrow">The crew</span><h2>Enough capacity to make a difference.</h2>{ps(['Coastside operates with a crew of 15+ across rendering, plastering and specialist finish work.', 'That capacity allows us to allocate labour according to project requirements rather than trying to make every job fit the same crew.', 'For larger projects, it means we can build a team around the package, stage works across elevations and maintain production as the project progresses.'])}</div></div></section>'''
     body += f'''<section class="sec dark"><div class="wrap"><div class="v7-split"><div><span class="eyebrow">Our process</span><h2>From tender to handover.</h2></div><div class="v7-copy"><p class="v7-pull">Clear scope before anyone starts.</p></div></div>{process_ol()}</div></section>'''
     body += cta(c)

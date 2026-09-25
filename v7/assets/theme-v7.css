@@ -352,3 +352,8 @@ body[data-type=home] .nav.compact .nav-links .nav-cta{background:#7D6749!importa
 @media (max-width:900px){.v7-ig{grid-template-columns:repeat(3,1fr);gap:8px}}
 @media (max-width:480px){.v7-ig{gap:4px}.v7-ig-reel{top:7px;right:7px;border-width:5px 0 5px 8px}}
 @media (prefers-reduced-motion:reduce){.v7-ig-tile img{transition:none}.v7-ig-tile:hover img{transform:none}}
+/* Edited photography (25 Sep 2026): keep the subject in frame when portrait images crop to wide bands */
+img[src*="/commercial-entry"]{object-position:50% 68%}
+img[src*="/curved-balconies"]{object-position:50% 42%}
+img[src*="/crew-spraying"]{object-position:50% 40%}
+.grid-2 img[src*="/crew-spraying"]{width:100%;height:auto;aspect-ratio:4/5;object-fit:cover}
