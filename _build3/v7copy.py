@@ -140,6 +140,9 @@ def install(g):
     g.update(home=home, services_hub=services_hub, service_page=service_page, about=about, builder_pack=builder_pack,
              areas_hub=areas_hub, projects_hub=projects_hub, project_page=project_page, quote=quote, contact=contact, cta=cta)
     g['FOOTER_V7'] = footer
+    # Resources hub hero lives in build.py; V7 swaps in a photo hero (25 Sep 2026)
+    g['V7_RESOURCES_HERO'] = lambda c, items: page_hero(c, items, 'Resources', 'Straight answers for builders and site managers.',
+                                                        ['Written from the job, reviewed by Steve. No filler.'], photo='curved-balconies')
     # V7 only: new project photography (Sep 2026). None of the original images are used in V7.
     # Everything is overridden here so v3-v6 builds are untouched.
     for sv in g['SERVICES']:
@@ -222,9 +225,9 @@ V7_NEW_PROJECTS = {
 WORK_BAND = ('site-overhead', 'Overhead view of a multi-storey construction site under way')
 WORK = [
     # (image, alt, frame class, share of desktop width, desktop frame width/height)
-    ('crew-spraying', 'Two Coastside plasterers spraying render onto a block wall from scaffold', 'm-crew arch', 0.33, 0.76),
+    ('crew-spraying', 'Two Coastside plasterers spraying render onto a block wall from scaffold', 'm-crew sweep-tl', 0.33, 0.76),
     ('scaffold-canal', 'Coastside crew rendering a canal-front building from scaffold, seen from the air', 'm-wide sweep-tr', 0.66, 1.55),
-    ('commercial-entry', 'Curved rendered entry arches and a lit rendered bench at a Gold Coast multi-storey building', 'm-entry arch', 0.41, 0.95),
+    ('commercial-entry', 'Curved rendered entry arches and a lit rendered bench at a Gold Coast multi-storey building', 'm-entry sweep-bl', 0.41, 0.95),
     ('curved-balconies', 'Three-storey building with curved rendered balcony bands and a stone-clad corner', 'm-balc', 0.33, 0.76),
     ('apartments-skyline', 'Multi-storey apartment building under scaffold with the Gold Coast skyline behind', 'm-sky sweep-br', 0.25, 0.56),
 ]
@@ -525,7 +528,7 @@ def builder_pack():
     body = page_hero(c, items, 'Builders / procurement', 'Everything you need before we arrive on site.',
                      ['Commercial procurement shouldn’t involve chasing a subcontractor for basic documentation.',
                       'We maintain the licensing, insurance and project documentation required to work across commercial and multi-residential construction.'],
-                     ('Download capability statement', 'coastside-capability-statement.pdf'))
+                     ('Download capability statement', 'coastside-capability-statement.pdf'), photo='scaffold-canal')
     body += f'<section class="sec"><div class="wrap">{tiles_html}</div></section>'
     body += f'''<section class="sec cream" id="documents"><div class="wrap"><div class="head"><span class="eyebrow">Document register</span><h2>Documents</h2></div>
   <table class="table register"><thead><tr><th>Document</th><th>Type</th><th>Access</th><th>Issued</th><th>Expires</th><th><span class="sr">Action</span></th></tr></thead><tbody>{rows}</tbody></table></div></section>

@@ -375,16 +375,21 @@ img[src*="/crew-spraying"]{object-position:50% 40%}
 .hero-photo .hero-bg img{object-fit:cover;object-position:50% 52%}
 .hero-photo::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,rgba(22,21,19,.86) 0%,rgba(22,21,19,.7) 42%,rgba(22,21,19,.3) 75%,rgba(22,21,19,.15) 100%),linear-gradient(180deg,rgba(22,21,19,.45) 0%,rgba(22,21,19,0) 30%)}
 @media (max-width:700px){.hero-photo .hero-bg img{object-position:62% 50%}.hero-photo::before{background:rgba(22,21,19,.68)}}
+/* Resources hero: portrait photo, frame the curved slab and slats (25 Sep 2026) */
+.hero-photo .hero-bg img[src*="/curved-balconies"]{object-position:50% 60%}
+@media (max-width:700px){.hero-photo .hero-bg img[src*="/curved-balconies"]{object-position:40% 55%}}
 /* 04 and 06 (25 Sep 2026) */
 .band img[src*="/bathroom-plaster"]{object-position:50% 58%}
 .band img[src*="/feature-wall"]{object-position:50% 48%}
 
 /* ---------- Curve language (25 Sep 2026) ----------
-   Render is the trade that does curves. Image frames take arches and sweeps from the work itself
-   (arched entries, curved slabs, rounded balcony bands) instead of a row of identical rectangles. */
-.arch,.card .ph{border-radius:999px 999px 0 0}
+   Render is the trade that does curves. One shape across the site: a frame with a single sweeping corner,
+   like a curved slab edge, instead of rows of identical rectangles. */
+.sweep-tl{border-top-left-radius:clamp(70px,10vw,160px)}
 .sweep-tr{border-top-right-radius:clamp(80px,12vw,180px)}
+.sweep-bl{border-bottom-left-radius:clamp(70px,10vw,160px)}
 .sweep-br{border-bottom-right-radius:clamp(60px,9vw,140px)}
+.card .ph{border-top-right-radius:clamp(56px,7vw,110px)}
 
 /* Recent work: fixed mosaic, 12-col */
 .v7-work{grid-template-columns:repeat(12,1fr);grid-auto-rows:clamp(150px,18vw,258px);gap:16px}
@@ -394,7 +399,7 @@ img[src*="/crew-spraying"]{object-position:50% 40%}
 .v7-work .m-entry{grid-column:1/6;grid-row:3/5}
 .v7-work .m-balc{grid-column:6/10;grid-row:3/5}
 .v7-work .m-sky{grid-column:10/13;grid-row:3/5}
-.v7-work .arch,.v7-work .sweep-tr,.v7-work .sweep-br{overflow:hidden}
+.v7-work figure{overflow:hidden}
 @media (max-width:700px){
   .v7-work{grid-template-columns:1fr 1fr;grid-auto-rows:34vw;gap:8px}
   .v7-work .m-crew{grid-column:1/2;grid-row:1/4}
@@ -404,7 +409,7 @@ img[src*="/crew-spraying"]{object-position:50% 40%}
   .v7-work .m-balc{display:none}
 }
 
-/* Project cards: arched portrait frames */
+/* Project cards: portrait frames with one sweeping corner */
 .card .ph{aspect-ratio:4/5}
 @media (max-width:700px){.card .ph,.tall .ph{aspect-ratio:5/6}}
 
