@@ -358,19 +358,15 @@ img[src*="/curved-balconies"]{object-position:50% 42%}
 img[src*="/crew-spraying"]{object-position:50% 40%}
 .grid-2 img[src*="/crew-spraying"]{width:100%;height:auto;aspect-ratio:4/5;object-fit:cover}
 
-/* Tall hero (25 Sep 2026): hero takes the video's own shape (2696x3072) so the house is never cropped.
-   Desktop: headline sits in the first screen, the rest of the house reveals on scroll. */
-.v7h{height:auto;min-height:0;aspect-ratio:2696/3072}
-.v7h-bg video{object-fit:cover;object-position:50% 50%}
-.v7h-shade{background:radial-gradient(ellipse 50% 22% at 50% 27%,rgba(22,21,19,.45) 0%,rgba(22,21,19,0) 100%),linear-gradient(180deg,rgba(22,21,19,.6) 0%,rgba(22,21,19,.48) 22%,rgba(22,21,19,.36) 38%,rgba(22,21,19,.06) 54%,rgba(22,21,19,0) 72%,rgba(22,21,19,.5) 100%)}
-.v7h-serif,.v7h-kicker{text-shadow:0 1px 18px rgba(0,0,0,.35)}
+/* Tall hero (25 Sep 2026), desktop and tablet only: hero takes the video's own shape (2696x3072) so the house is never cropped.
+   Headline sits in the first screen, the rest of the house reveals on scroll. Phones keep the full-screen video. */
 @media (min-width:701px){
+  .v7h{height:auto;min-height:0;aspect-ratio:2696/3072}
+  .v7h-bg video{object-fit:cover;object-position:50% 50%}
+  .v7h-shade{background:radial-gradient(ellipse 50% 22% at 50% 27%,rgba(22,21,19,.45) 0%,rgba(22,21,19,0) 100%),linear-gradient(180deg,rgba(22,21,19,.6) 0%,rgba(22,21,19,.48) 22%,rgba(22,21,19,.36) 38%,rgba(22,21,19,.06) 54%,rgba(22,21,19,0) 72%,rgba(22,21,19,.5) 100%)}
+  .v7h-serif,.v7h-kicker{text-shadow:0 1px 18px rgba(0,0,0,.35)}
   .v7h-stack{align-self:start;padding-top:calc(var(--nav-h) + 14vh)}
   .v7h-scroll{top:calc(100svh - 110px);bottom:auto}
-}
-@media (max-width:700px){
-  .v7h-shade{background:linear-gradient(180deg,rgba(22,21,19,.55) 0%,rgba(22,21,19,.4) 45%,rgba(22,21,19,.3) 70%,rgba(22,21,19,.6) 100%)}
-  .v7h-foot{padding-bottom:28px}
 }
 
 /* Photo underlay for page heroes (25 Sep 2026): Projects uses the polished plaster bathroom */
@@ -382,3 +378,42 @@ img[src*="/crew-spraying"]{object-position:50% 40%}
 /* 04 and 06 (25 Sep 2026) */
 .band img[src*="/bathroom-plaster"]{object-position:50% 58%}
 .band img[src*="/feature-wall"]{object-position:50% 48%}
+
+/* ---------- Curve language (25 Sep 2026) ----------
+   Render is the trade that does curves. Image frames take arches and sweeps from the work itself
+   (arched entries, curved slabs, rounded balcony bands) instead of a row of identical rectangles. */
+.arch,.card .ph{border-radius:999px 999px 0 0}
+.sweep-tr{border-top-right-radius:clamp(80px,12vw,180px)}
+.sweep-br{border-bottom-right-radius:clamp(60px,9vw,140px)}
+
+/* Recent work: fixed mosaic, 12-col */
+.v7-work{grid-template-columns:repeat(12,1fr);grid-auto-rows:clamp(150px,18vw,258px);gap:16px}
+.v7-work img{aspect-ratio:auto}
+.v7-work .m-crew{grid-column:1/5;grid-row:1/3}
+.v7-work .m-wide{grid-column:5/13;grid-row:1/3}
+.v7-work .m-entry{grid-column:1/6;grid-row:3/5}
+.v7-work .m-balc{grid-column:6/10;grid-row:3/5}
+.v7-work .m-sky{grid-column:10/13;grid-row:3/5}
+.v7-work .arch,.v7-work .sweep-tr,.v7-work .sweep-br{overflow:hidden}
+@media (max-width:700px){
+  .v7-work{grid-template-columns:1fr 1fr;grid-auto-rows:34vw;gap:8px}
+  .v7-work .m-crew{grid-column:1/2;grid-row:1/4}
+  .v7-work .m-wide{grid-column:2/3;grid-row:1/3}
+  .v7-work .m-sky{grid-column:2/3;grid-row:3/4}
+  .v7-work .m-entry{grid-column:1/3;grid-row:4/7}
+  .v7-work .m-balc{display:none}
+}
+
+/* Project cards: arched portrait frames */
+.card .ph{aspect-ratio:4/5}
+@media (max-width:700px){.card .ph,.tall .ph{aspect-ratio:5/6}}
+
+/* Home selected projects: staggered, not a flat row */
+@media (min-width:901px){
+  .cards.v7-stagger{align-items:start}
+  .cards.v7-stagger>.card:nth-child(2){margin-top:72px}
+  .cards.v7-stagger>.card:nth-child(3){margin-top:144px}
+}
+
+/* Instagram: soft corners so the strip reads as a feed, not another grid */
+.v7-ig-tile{border-radius:14px}

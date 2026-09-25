@@ -118,7 +118,7 @@ def project_card(c, p, h='h3'):
     tags = ' / '.join([SECTORS[p['sector']], BUILD_TYPES[p['build']]])
     return (f'<a class="card" href="{c.L("projects/" + p["slug"] + "/")}" data-sector="{p["sector"]}" '
             f'data-service="{" ".join(p["services"])}" data-location="{p["location"]}" data-build="{p["build"]}">'
-            f'<div class="ph">{pic(c, p["img"], p["alt"], "(max-width:640px) 100vw, (max-width:1100px) 50vw, 400px")}</div>'
+            f'<div class="ph">{pic(c, p["img"], p["alt"], "(max-width:700px) 100vw, (max-width:1100px) 50vw, 640px")}</div>'
             f'<span class="tag">{tags}</span><{h}>{p["title"]}</{h}><p>{p["summary"]}</p>'
             f'<span class="more">View case study</span></a>')
 
@@ -187,7 +187,7 @@ def page(c, title, desc, body, ptype='page', active=None, schema=(), og='hero', 
 <meta name="theme-color" content="#2A2A2A">
 <link rel="icon" href="{L('img/logo.png')}">
 {('<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&display=swap">') if HERO == 'strip' and ptype == 'home' else ''}
-<link rel="stylesheet" href="{L('assets/site.css')}">{('<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=IBM+Plex+Mono:wght@400;500&display=swap"><link rel="stylesheet" href="' + L('assets/theme-v6.css') + '">') if THEME == 'v6' else ''}{('<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"><link rel="stylesheet" href="' + L('assets/theme-v7.css') + '?v=20260925-7' + '">') if THEME == 'v7' else ''}{('<link rel="stylesheet" href="' + L('assets/palette-' + PALETTE + '.css') + '">') if PALETTE else ''}
+<link rel="stylesheet" href="{L('assets/site.css')}">{('<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=IBM+Plex+Mono:wght@400;500&display=swap"><link rel="stylesheet" href="' + L('assets/theme-v6.css') + '">') if THEME == 'v6' else ''}{('<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"><link rel="stylesheet" href="' + L('assets/theme-v7.css') + '?v=20260925-8' + '">') if THEME == 'v7' else ''}{('<link rel="stylesheet" href="' + L('assets/palette-' + PALETTE + '.css') + '">') if PALETTE else ''}
 {ld}
 </head>
 <body data-type="{ptype}" data-slug="{slug}"{' class="oh-body"' if not chrome else ''}>

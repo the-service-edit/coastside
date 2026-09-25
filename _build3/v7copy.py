@@ -221,12 +221,12 @@ V7_NEW_PROJECTS = {
 }
 WORK_BAND = ('site-overhead', 'Overhead view of a multi-storey construction site under way')
 WORK = [
-    ('crew-spraying', 'Two Coastside plasterers spraying render onto a block wall from scaffold'),
-    ('commercial-entry', 'Curved rendered entry arches and a lit rendered bench at a Gold Coast multi-storey building'),
-    ('scaffold-canal', 'Coastside crew rendering a canal-front building from scaffold, seen from the air'),
-    ('curved-balconies', 'Three-storey building with curved rendered balcony bands and a stone-clad corner'),
-    ('apartments-skyline', 'Multi-storey apartment building under scaffold with the Gold Coast skyline behind'),
-    ('curved-front', 'Curved rendered upper level with timber battens and a glass balcony'),
+    # (image, alt, frame class, share of desktop width, desktop frame width/height)
+    ('crew-spraying', 'Two Coastside plasterers spraying render onto a block wall from scaffold', 'm-crew arch', 0.33, 0.76),
+    ('scaffold-canal', 'Coastside crew rendering a canal-front building from scaffold, seen from the air', 'm-wide sweep-tr', 0.66, 1.55),
+    ('commercial-entry', 'Curved rendered entry arches and a lit rendered bench at a Gold Coast multi-storey building', 'm-entry arch', 0.41, 0.95),
+    ('curved-balconies', 'Three-storey building with curved rendered balcony bands and a stone-clad corner', 'm-balc', 0.33, 0.76),
+    ('apartments-skyline', 'Multi-storey apartment building under scaffold with the Gold Coast skyline behind', 'm-sky sweep-br', 0.25, 0.56),
 ]
 
 
@@ -236,11 +236,11 @@ def work_band(c):
 
 def work_grid(c):
     L = c.L
-    def sz(n):
+    def sz(n, share, box):
         w, h = dims(n)
-        k = max(1.0, (w / h) / 0.8)
-        return f"(max-width:700px) {round(50 * k)}vw, (max-width:1400px) {round(33 * k)}vw, {round(460 * k)}px"
-    figs = ''.join(f'<figure>{pic(c, n, a, sz(n))}</figure>' for n, a in WORK)
+        k = max(1.0, (w / h) / box)  # object-fit:cover on a narrower frame needs a wider file
+        return f"(max-width:700px) 100vw, (max-width:1400px) {round(share * 100 * k)}vw, {round(1240 * share * k)}px"
+    figs = ''.join(f'<figure class="{cls}">{pic(c, n, a, sz(n, share, box))}</figure>' for n, a, cls, share, box in WORK)
     return f'''<section class="sec v7-work-sec"><div class="wrap">
   <div class="head-row"><div><span class="eyebrow">Recent work</span><h2>On site and finished.</h2></div><a class="text-link" href="{L('projects/')}">View projects{ARROW}</a></div>
   <div class="v7-work">{figs}</div>
@@ -330,7 +330,7 @@ def home():
     L = c.L
     featured = [p for p in PROJECTS if p['featured']][:3]
     hero = f'''<section class="v7h" aria-labelledby="h1">
-  <div class="v7h-bg"><video class="v7h-video" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover" autoplay muted loop playsinline preload="metadata" poster="{L('img/v7-hero-tall-poster.jpg')}" data-desktop="{L('img/v7-hero-tall-desktop.mp4')}" data-desktop-poster="{L('img/v7-hero-tall-desktop-poster.jpg')}" aria-hidden="true"><source src="{L('img/v7-hero-tall.mp4')}" type="video/mp4"></video></div>
+  <div class="v7h-bg"><video class="v7h-video" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover" autoplay muted loop playsinline preload="metadata" poster="{L('img/v7-hero-poster.jpg')}" data-desktop="{L('img/v7-hero-tall-desktop.mp4')}" data-desktop-poster="{L('img/v7-hero-tall-desktop-poster.jpg')}" aria-hidden="true"><source src="{L('img/v7-hero.mp4')}" type="video/mp4"></video></div>
   <script>(function(){{var v=document.querySelector('.v7h-video');if(!v)return;var mm=window.matchMedia||function(){{return{{matches:false}}}};if(mm('(min-width: 900px)').matches){{v.poster=v.dataset.desktopPoster;v.querySelector('source').src=v.dataset.desktop;v.load();}}if(mm('(prefers-reduced-motion: reduce)').matches){{v.removeAttribute('autoplay');v.pause();}}else{{var p=v.play();if(p&&p.catch)p.catch(function(){{}});}}}})();</script>
   <div class="v7h-shade" aria-hidden="true"></div>
   <div class="v7h-stack">
@@ -369,7 +369,7 @@ def home():
                     + f'<a class="text-link" href="{L("quote/")}">Discuss your specification{ARROW}</a>', 'sec stone')
     projects = f'''<section class="sec"><div class="wrap">
   <div class="head-row"><div><span class="eyebrow">Selected projects</span><h2>The work is the proof.</h2></div><a class="text-link" href="{L('projects/')}">View projects{ARROW}</a></div>
-  <div class="cards">{''.join(project_card(c, p) for p in featured)}</div>
+  <div class="cards v7-stagger">{''.join(project_card(c, p) for p in featured)}</div>
 </div></section>'''
     process = f'''<section class="sec stone"><div class="wrap">
   <div class="v7-split"><div><span class="eyebrow">Our process</span><h2>From tender to handover.</h2></div>
