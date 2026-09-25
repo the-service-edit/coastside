@@ -422,3 +422,13 @@ img[src*="/crew-spraying"]{object-position:50% 40%}
 
 /* Instagram: soft corners so the strip reads as a feed, not another grid */
 .v7-ig-tile{border-radius:14px}
+
+/* Hero text centring (25 Sep 2026).
+   1) Desktop/tablet: the stack fills the first screen and centres vertically in it (under the nav), not pinned 14vh from the top.
+   2) All sizes: offset the trailing letter-spacing so tracked caps sit on the true centre line. */
+@media (min-width:701px){
+  .v7h-stack{align-self:start;box-sizing:border-box;height:100svh;min-height:560px;padding-top:var(--nav-h);padding-bottom:40px;display:flex;flex-direction:column;justify-content:center;align-items:center}
+}
+.v7h-kicker{padding-left:.3em}
+.v7h-wm{padding-right:.045em}
+.v7h-serif{padding-left:.14em}
