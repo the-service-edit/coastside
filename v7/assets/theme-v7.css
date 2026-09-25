@@ -357,3 +357,25 @@ img[src*="/commercial-entry"]{object-position:50% 68%}
 img[src*="/curved-balconies"]{object-position:50% 42%}
 img[src*="/crew-spraying"]{object-position:50% 40%}
 .grid-2 img[src*="/crew-spraying"]{width:100%;height:auto;aspect-ratio:4/5;object-fit:cover}
+
+/* Tall hero (25 Sep 2026): hero takes the video's own shape (2696x3072) so the house is never cropped.
+   Desktop: headline sits in the first screen, the rest of the house reveals on scroll. */
+.v7h{height:auto;min-height:0;aspect-ratio:2696/3072}
+.v7h-bg video{object-fit:cover;object-position:50% 50%}
+.v7h-shade{background:radial-gradient(ellipse 50% 22% at 50% 27%,rgba(22,21,19,.45) 0%,rgba(22,21,19,0) 100%),linear-gradient(180deg,rgba(22,21,19,.6) 0%,rgba(22,21,19,.48) 22%,rgba(22,21,19,.36) 38%,rgba(22,21,19,.06) 54%,rgba(22,21,19,0) 72%,rgba(22,21,19,.5) 100%)}
+.v7h-serif,.v7h-kicker{text-shadow:0 1px 18px rgba(0,0,0,.35)}
+@media (min-width:701px){
+  .v7h-stack{align-self:start;padding-top:calc(var(--nav-h) + 14vh)}
+  .v7h-scroll{top:calc(100svh - 110px);bottom:auto}
+}
+@media (max-width:700px){
+  .v7h-shade{background:linear-gradient(180deg,rgba(22,21,19,.55) 0%,rgba(22,21,19,.4) 45%,rgba(22,21,19,.3) 70%,rgba(22,21,19,.6) 100%)}
+  .v7h-foot{padding-bottom:28px}
+}
+
+/* Photo underlay for page heroes (25 Sep 2026): Projects uses the polished plaster bathroom */
+.hero-photo{position:relative;overflow:hidden;isolation:isolate}
+.hero-photo .hero-bg,.hero-photo .hero-bg img{position:absolute;inset:0;width:100%;height:100%;z-index:-2}
+.hero-photo .hero-bg img{object-fit:cover;object-position:50% 52%}
+.hero-photo::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,rgba(22,21,19,.86) 0%,rgba(22,21,19,.7) 42%,rgba(22,21,19,.3) 75%,rgba(22,21,19,.15) 100%),linear-gradient(180deg,rgba(22,21,19,.45) 0%,rgba(22,21,19,0) 30%)}
+@media (max-width:700px){.hero-photo .hero-bg img{object-position:62% 50%}.hero-photo::before{background:rgba(22,21,19,.68)}}
